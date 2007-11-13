@@ -1,25 +1,6 @@
 function varargout = CNACQ(varargin)
 %  CNACQ M-file for CNACQ.fig
-%      CNACQ, by itself, creates a new CNACQ or raises the existing
-%      singleton*.
 %
-%      H = CNACQ returns the handle to a new CNACQ or the handle to
-%      the existing singleton*.
-%
-%      CNACQ('CALLBACK',hObject,eventData,handles,...) calls the local
-%      function named CALLBACK in CNACQ.M with the given input arguments.
-%
-%      CNACQ('Property','Value',...) creates a new CNACQ or raises the
-%      existing singleton*.  Starting from the left, property value pairs are
-%      applied to the GUI before CNACQ_OpeningFunction gets called.  An
-%      unrecognized property name or invalid value makes property application
-%      stop.  All inputs are passed to CNACQ_OpeningFcn via varargin.
-%
-%      *See GUI Options on GUIDE's Tools menu.  Choose "GUI allows only one
-%      instance to run (singleton)".
-%
-%  See also: GUIDE, GUIDATA, GUIHANDLES
-
 %  Copyright (c) 2007 Guillaume Pellerin <guillaume.pellerin@cnam.fr>
 %  All rights reserved.
 
@@ -54,6 +35,27 @@ function varargout = CNACQ(varargin)
 %  Author: Guillaume Pellerin <guillaume.pellerin@cnam.fr>
 
 % Last Modified by GUIDE v2.5 07-Nov-2007 18:26:57
+
+%      CNACQ, by itself, creates a new CNACQ or raises the existing
+%      singleton*.
+%
+%      H = CNACQ returns the handle to a new CNACQ or the handle to
+%      the existing singleton*.
+%
+%      CNACQ('CALLBACK',hObject,eventData,handles,...) calls the local
+%      function named CALLBACK in CNACQ.M with the given input arguments.
+%
+%      CNACQ('Property','Value',...) creates a new CNACQ or raises the
+%      existing singleton*.  Starting from the left, property value pairs are
+%      applied to the GUI before CNACQ_OpeningFunction gets called.  An
+%      unrecognized property name or invalid value makes property application
+%      stop.  All inputs are passed to CNACQ_OpeningFcn via varargin.
+%
+%      *See GUI Options on GUIDE's Tools menu.  Choose "GUI allows only one
+%      instance to run (singleton)".
+%
+%  See also: GUIDE, GUIDATA, GUIHANDLES
+
 
 % Global variables
 

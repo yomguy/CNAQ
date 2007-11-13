@@ -1,7 +1,7 @@
 # README
 # ======
 
-CNACQ : a Matlab acquisition tool for ASIO
+CNACQ : a Matlab acquisition tool for computing transfert function over ASIO cards
 
 
 # 1. Introduction
@@ -38,10 +38,11 @@ are also available at http://svn.parisson.org/cnacq/CnacqLicense
 Just open CNACQ.m in Matlab and run it...
 
  
-# 5. Author
+# 5. Authors
 # =========
 
 Guillaume Pellerin <guillaume.pellerin@cnam.fr>
+Manuel Melon <melon@cnam.fr>
 
 
 # 6. Aknowledgements
