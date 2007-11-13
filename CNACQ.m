@@ -554,7 +554,7 @@ function mes_on_Callback(hObject, eventdata, handles)
     
     % Synchronizing
     %The number of samples in the buffer (latency of the sound card in
-    %samples. See tests/testacqui2.m)
+    %samples. See tests/testacqui.m)
     delay = 588;  
     zero = zeros(1,delay);
     % Zeros are added before and removed after

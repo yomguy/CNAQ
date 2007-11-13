@@ -1,6 +1,7 @@
 function specplot(ficpath,fic,sens,var)
 % plots the spectrogram of a signal
 % distributed as a part of fazplot
+% Author : Guillaume Pellerin
 
 % PARAMETERS
 % ficpath: the path folder of the wav file
