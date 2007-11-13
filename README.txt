@@ -47,7 +47,7 @@ Guillaume Pellerin <guillaume.pellerin@cnam.fr>
 # 6. Aknowledgements
 # ==================
 
-Manuel Melon, Andrew Gadenko, 
+Manuel Melon, Andrew Gadenko, Philippe Herzog 
 
 
 # 7. Contact / Infos
