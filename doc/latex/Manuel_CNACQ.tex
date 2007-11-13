@@ -1,0 +1,229 @@
+\documentclass[pdftex,11pt,a4paper,twoside]{article}
+
+\usepackage{article_profile}
+%\graphicspath{{/figures}}
+
+%==================================================================
+% Page de garde
+%==================================================================
+
+\title{\begin{flushright}
+    \rule{17cm}{1mm}\\
+    \vspace{8mm}
+    \huge{\bf{Manuel du logiciel CNACQ}}\\
+	\vspace{4mm}
+    \rule{17cm}{1mm}\\
+    \large{\today\\}
+    \large{Version 0.1}\\
+	\vspace{3cm}
+    \end{flushright}
+ 	\begin{figure}[h]
+ 	\centering
+ 	 \includegraphics[width=12cm]{img/cnacq-01}
+ 	\end{figure}
+	\vspace{3cm}
+}
+
+\author{\textbf{Guillaume Pellerin$^1$}\\
+    \vspace{0.5cm}
+    \small{
+    $^1$ Laboratoire d'Acoustique, Conservatoire National des Arts et Métiers\\
+    5 rue du Vert Bois 75003 Paris, France\\ <\href{mailto:guillaume.pellerin@cnam.fr}{guillaume.pellerin@cnam.fr}>\\
+     \vspace{0.5cm}
+	}}
+
+
+
+\begin{document}
+
+\maketitle
+
+\newpage
+\tableofcontents
+
+\begin{figure}[b]
+  \includegraphics[width=4cm]{img/logo_cnam.png}
+  \large{Copyright (C) 2007 Guillaume Pellerin}
+\end{figure}
+
+
+%\setcounter{page}{3}
+
+\cleardoublepage
+\setlength{\parindent}{5mm}
+\renewcommand{\labelitemi}{$\bullet$}
+
+\section{Introduction}
+
+CNACQ est un logiciel dédié à la mesure de fonctions de transfert des systèmes électriques ou électrodynamiques. Ecrit en langage Matlab, il permet d'utiliser une carte d'acquisition audio compatible avec la norme ASIO pour générer un signal de type sinus glissant (<< sweep >> ou << chirp >> en anglais), de quantifier la réponse temporelle du système puis d'en déterminer sa réponse fréquentielle.
+
+La structure d'analyse de CNACQ utilise la méthode d'Angelo Farina \cite{farina} qui, appliquée dans le domaine numérique, permet d'obtenir des réponses avec un grand nombre d'échantillons, même à très basse fréquence, tout en suivant les harmoniques créés au cours du glissement en fréquence. Le calcul est en effet basé sur un produit de convolution dont la transformée de Fourier comporte le même nombre de points que le  nombre d'échantillons dans le signal mesuré. Outre le fait que cette technique offre une souplesse d'utilisation supplémentaire par rapport aux autres méthodes, MLS par exemple, elle fournit des résolutions fréquentielles très grandes, notamment aux basses fréquences. Elle rend également très aisée et rapide la déduction des taux de distortions du système mesuré \cite{muller}.
+
+Le logiciel CNACQ offre ainsi une interface interactive pour mesurer et calculer les fonctions de transfert directement dans Matlab. Il s'inspire pour certaines idées du logiciel libre QLoud \cite{qloud} fonctionnant sur système GNU/Linux.
+
+
+\section{Licence}
+
+Ce logiciel libre CNACQ est régi par la licence CeCILL soumise au droit français et
+respectant les principes de diffusion des logiciels libres. Vous pouvez
+utiliser, modifier et/ou redistribuer ce programme sous les conditions
+de la licence CeCILL telle que diffusée par le CEA, le CNRS et l'INRIA
+sur le site \url{http://www.cecill.info}.
+
+En contrepartie de l'accessibilité au code source et des droits de copie,
+de modification et de redistribution accordés par cette licence, il n'est
+offert aux utilisateurs qu'une garantie limitée.  Pour les mêmes raisons,
+seule une responsabilité restreinte pèse sur l'auteur du programme,  le
+titulaire des droits patrimoniaux et les concédants successifs.
+
+A cet égard  l'attention de l'utilisateur est attirée sur les risques
+associés au chargement,  à l'utilisation,  à la modification et/ou au
+développement et à la reproduction du logiciel par l'utilisateur étant
+donné sa spécificité de logiciel libre, qui peut le rendre complexe à
+manipuler et qui le réserve donc à des développeurs et des professionnels
+avertis possédant  des  connaissances  informatiques approfondies.  Les
+utilisateurs sont donc invités à charger  et  tester  l'adéquation  du
+logiciel à leurs besoins dans des conditions permettant d'assurer la
+sécurité de leurs systèmes et ou de leurs données et, plus généralement,
+à l'utiliser et l'exploiter dans les mêmes conditions de sécurité.
+
+Le fait que vous puissiez accéder à cet en-tête signifie que vous avez
+pris connaissance de la licence CeCILL, et que vous en avez accepté les
+termes.
+
+
+\section{Téléchargement}
+
+CNACQ est librement téléchargeable à l'adresse suivante : \url{http://svn.parisson.org/cnacq/} où il est conseillé de choisir la dernière version.
+
+Pour obtenir la version de développement, il est nécessaire d'utiliser le logiciel Subversion\footnote{\url{http://subversion.tigris.org/}} et d'utiliser la commande :
+\begin{verbatim}
+ svn co https://svn.parisson.org/svn/CNACQ/trunk CNACQ
+\end{verbatim}
+
+
+\section{Dépendances}
+
+\begin{itemize}
+\item Microsoft Windows\circledR~~(>= 2000).
+\item MATLAB\circledR~~(>= 6.0).
+\item Une carte audio compatible ASIO et ses pilotes ASIO installés.\\
+\end{itemize}
+
+CNACQ utilise deux principes pour converser avec la carte d'acquisition. D'une part, les fonctions d'émission du générateur propres à Matlab sur la base du driver \textit{Winsound} permettent d'utiliser le monitoring graphique en parallèle de l'émission. D'autre part, les librairies \textit{pa-wavplay} \cite{pawavplay} utilisant la norme ASIO facilitent le calcul des fonctions de transfert grâce à une taille de tampon mémoire mieux gérée.
+
+
+\section{Lancement}\label{lancement}
+
+%Dans cette documentation, nous considérerons que le dossier décompressé de l'application se trouve à l'addresse \texttt{C:\CNACQ}. Si l'application a été décompréssée dans un autre dossier, modifier les exemples suivants en conséquence.
+
+\begin{enumerate}
+ \item Démarrer Matlab.
+ \item Exécuter le fichier CNACQ.m depuis le dossier décompressé de l'application CNACQ, par exemple \verb|C:\CNACQ|. Avant de démarrer, l'application demande de fournir un dossier de travail. Ce dossier peut être vide mais doit exister (le créer dans l'explorateur si nécessaire avec un nom explicite) : il intégrera l'ensemble des fichiers sauvegardés pendant les mesures. Une fenêtre semblable à la figure \ref{cnacq_default} doit alors s'afficher.
+
+    \begin{figure}[htbp]
+      \centering
+      \includegraphics[width=12cm]{img/cnacq_02}
+      \caption{Fenêtre de démarrage par défaut du logiciel CNACQ.}
+      \label{cnacq_default}
+    \end{figure}
+
+ \item Remplir les champs << Nom d'utilisateur >> et << Commentaires >>.
+ \item Démarrer le vu-mètre stereo : \verb|C:\CNACQ\vu-meters\meterV.exe|.
+\end{enumerate}
+
+
+\section{Détails de l'interface}
+
+L'interface graphique de CNACQ comporte 6 blocs principaux dont voici les descriptions :
+
+\begin{description}
+ \item[Données :] les données générales de la prochaine mesure : le nom de groupe (à remplir), les commentaires (optionnels), le dossier de travail à choisir (bouton \textbf{Browse}), la fréquence d'échantillonnage \textbf{$F_s$} en Hz et le nombre de bits \textbf{Nbits} de la quantification.\\
+
+ \item[Infos :]	les informations de copyright et de version de l'application utilisée.\\
+
+ \item[Moniteur :] les fenêtres d'affichage en temps réel des signaux entrant par la voie n°1. Au démarrage, l'affichage est désactivé. La première fenêtre est la forme d'onde temporelle du signal par blocs de 1 s et la deuxième le module de la transformée de Fourier de chaque  bloc numérisé. Cette fonction est démarrée en appuyant sur le bouton \textbf{ON/OFF} et stoppée de la même manière.\\
+ \textbf{Remarque :} les fonctions d'affichage de Matlab imposent une priorité maximale de l'affichage de CNACQ lorsque le moniteur est enclenché. Pour pouvoir intervenir sur d'autres fenêtres dans l'environnement Windows, il est donc nécessaire de \textbf{stopper le moniteur}.\\
+
+ \item[Voies :] les voies entrantes et sortantes utilisées de la carte d'acquisition et leurs gains associées dans l'intervalle $[0;1]$.\\
+
+ \item[Générateur : ] les fonctions permettant de générer un signal et de le jouer à travers les voies choisies.\\
+	Si le type de signal est un \textbf{sinus}, sa fréquence est déterminé par la valeur du curseur \textbf{Fréquence} et sa durée par la valeur du curseur \textbf{Durée}. Les bornes de chaque curseur sont déterminées par les valeurs indiquées dans les champs latéraux.\\
+	Si le type de signal est un \textbf{chirp}, un sinus à fréquence glissante logarithmique est généré. Ses bornes sont celles du curseur de fréquence.\\
+	L'émission du signal déterminé est effectuée en cliquant sur le bouton \textbf{TRIG}. Noter qu'il est possible d'émettre un signal tout en visualisant la réponse du système étudié sur le moniteur.\\
+
+ \item[Mesure :] les fonctions de mesure de fonctions de transfert selon la méthode de Farina.\\
+	Les valeurs des bornes fréquentielles pour la génération du chirp ainsi que sa durée sont issues de celles du bloc Générateur.\\
+	Le bouton \textbf{TRIG} lance la mesure et affiche les résultats temporels (réponse temporelle et réponse impulsionnelle) et fréquentiels (module et phase) dans de nouvelles fenêtres pour chaque voie.\\
+	Le bouton \textbf{Sauver} sauvegarde l'ensemble des paramètres de la fenêtre, le signal émis ainsi que tous les signaux temporels mesurés dans un fichier de type MAT dans le dossier de travail. Le nom de ce fichier comporte le nom du groupe et l'\textbf{ID} de la mesure. Cette valeur s'incrémente automatiquement après chaque sauvegarde.
+\end{description}
+
+
+\section{Première mesure}
+
+Voici une chronologie des étapes à suivre pour la mesure d'une fonction de transfert, après avoir effectué celles du paragraphe \ref{lancement}.
+
+\begin{enumerate}
+ \item Choisir la fréquence d'échantillonnage et le nombre de bits de quantification.
+ \item Choisir les voies d'entrée et de sortie ainsi que les gains associés\footnote{Pour une émission, seul le gain de sortie est influant.}. On ne doit JAMAIS dépasser 0 dB en entrée. Le vu-mètre externe permet de le contrôler.
+ \item Régler les paramètres du générateur qui détermineront ceux de la mesure (intervalles, durée, etc...).
+ \item Régler les appareils intermédiaires (amplis, filtres) en utilisant le générateur et le moniteur. Ne pas dépasser 0 dB au vu-mètre.
+ \item Effectuer la mesure à l'aide du bouton \textbf{TRIG} du bloc Mesure.
+ \item Sauvegarder éventuellement la mesure en cliquant sur le bouton \textbf{Sauver}.
+\end{enumerate}
+
+
+\section{Dépouillement}
+
+\subsection{Récupérer une mesure}\label{depouillement_1}
+Outre les résultats bruts affichés après chaque mesure, il est possible d'analyser plus profondément les résultats grâce au langage Matlab. Il suffit de rappeler le fichier sauvegardé de type MAT depuis le dossier de travail à l'aide de la fonction \textbf{load}. Par exemple, si le fichier se nomme \verb|Durand_89.mat| et se trouve dans le dossier \verb|D:\Durand|, exécuter :
+
+\begin{verbatim}
+load(D:\Durand\Durand_89.mat)
+\end{verbatim}
+
+Toutes les variables ainsi que les signaux temporels mesurés sont alors disponibles en mémoire pour être traîtés (voir la fenêtre \textbf{Workspace}). Voici une liste non-exhaustive des paramètres et des signaux récupérés :
+
+\begin{description}
+ \item[\texttt{comment} :] le commentaire textuel associé à la mesure.
+ \item[\texttt{f\_lin} :] le vecteur fréquentiel utilisé pour le tracé des fonctions de transfert.
+ \item[\texttt{f\_log} :] le vecteur fréquentiel utilisé pour la définition du sinus glissant logarithmique.
+ \item[\texttt{f\_max} :] la fréquence maximale mesurée.
+ \item[\texttt{f\_min} :] la fréquence minimale mesurée.
+ \item[\texttt{f\_s} :] la fréquence d'échantillonnage.
+ \item[\texttt{file} :] l'adresse du fichier de mesure sauvegardé dans le système de fichier.
+ \item[\texttt{gain\_in} :] la valeur du gain d'entrée en dB au cours de la mesure.
+ \item[\texttt{gain\_out} :] la valeur du gain de sortie en dB au cours de la mesure.
+ \item[\texttt{groupe} :] le nom du groupe de travail.
+ \item[\texttt{home\_dir} :] le dossier de travail.
+ \item[\texttt{id} :] le numéro d'identification de la mesure sauvegardée.
+ \item[\texttt{nbits} :] le nombre de bits de quantification.
+ \item[\texttt{sig\_exc} :] le tableau des valeurs du signal d'excitation (mono-colonne).
+ \item[\texttt{sig\_mes} :] le tableau des valeurs des signaux mesurés (éventuellement multi-colonne).
+ \item[\texttt{time} :] la durée de la mesure en secondes.
+ \item[\texttt{voices\_in} :] les numéros des voies d'entrée de la carte d'acquisition choisies pour la mesure.
+ \item[\texttt{voices\_out} :] les numéros des voies de sortie de la carte d'acquisition choisies pour la mesure.
+ \end{description}
+
+\subsection{Aide}\label{depouillement_2}
+Deux commandes fondamentales permettent de trouver/retrouver une commande Matlab :
+\begin{itemize}
+ \item \textbf{lookfor} : pour chercher un commande a l'aide d'un mot clé. Par exemple :
+	\begin{verbatim}
+	 lookfor plot
+	\end{verbatim}
+ \item \textbf{help} : pour afficher l'aide textuelle d'une commande connnue. Par exemple :
+ 	\begin{verbatim}
+	 help plot
+	\end{verbatim}
+\end{itemize}
+
+\subsection{Octave}
+Lorsqu'aucune licence Matlab n'est disponible (chez soi par exemple), il est possible d'utiliser le logiciel libre et gratuit \textbf{Octave} \cite{octave} pour l'analyse des mesures. Ce logiciel, bien que moins complet que Matlab, dispose des mêmes fonctions principales que lui et surtout du même langage ! On peut donc - après avoir téléchargé, installé et démarré Octave - récupérer les mesures muni du fichier de sauvegarde .mat et exécuter directement les commandes vues aux paragraphes \ref{depouillement_1} et \ref{depouillement_2}.
+
+\newpage
+\bibliographystyle{apalike}
+\nocite{*}
+\bibliography{biblio_cnacq}
+
+\end{document}
