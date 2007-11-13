@@ -1,5 +1,5 @@
 function [ri,ft]=fonc_trans(f, sig_exc, sig_mes);
-%calcul d'une fonction de tranfert mesurée par l'interface CNACQ
+%calcul d'une fonction de tranfert mesurée par l'interface CNAQ
 %Sorties : fonction de transfert et réponse impulsionnelle 
 
 % soustraction de la composante continue

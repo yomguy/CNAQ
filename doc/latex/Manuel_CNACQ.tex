@@ -10,7 +10,7 @@
 \title{\begin{flushright}
     \rule{17cm}{1mm}\\
     \vspace{8mm}
-    \huge{\bf{Manuel du logiciel CNACQ}}\\
+    \huge{\bf{Manuel du logiciel CNAQ}}\\
 	\vspace{4mm}
     \rule{17cm}{1mm}\\
     \large{\today\\}
@@ -19,7 +19,7 @@
     \end{flushright}
  	\begin{figure}[h]
  	\centering
- 	 \includegraphics[width=12cm]{img/cnacq-01}
+ 	 \includegraphics[width=12cm]{img/cnaq-01}
  	\end{figure}
 	\vspace{3cm}
 }
@@ -55,16 +55,16 @@
 
 \section{Introduction}
 
-CNACQ est un logiciel dédié à la mesure de fonctions de transfert des systèmes électriques ou électrodynamiques. Ecrit en langage Matlab, il permet d'utiliser une carte d'acquisition audio compatible avec la norme ASIO pour générer un signal de type sinus glissant (<< sweep >> ou << chirp >> en anglais), de quantifier la réponse temporelle du système puis d'en déterminer sa réponse fréquentielle.
+CNAQ est un logiciel dédié à la mesure de fonctions de transfert des systèmes électriques ou électrodynamiques. Ecrit en langage Matlab, il permet d'utiliser une carte d'acquisition audio compatible avec la norme ASIO pour générer un signal de type sinus glissant (<< sweep >> ou << chirp >> en anglais), de quantifier la réponse temporelle du système puis d'en déterminer sa réponse fréquentielle.
 
-La structure d'analyse de CNACQ utilise la méthode d'Angelo Farina \cite{farina} qui, appliquée dans le domaine numérique, permet d'obtenir des réponses avec un grand nombre d'échantillons, même à très basse fréquence, tout en suivant les harmoniques créés au cours du glissement en fréquence. Le calcul est en effet basé sur un produit de convolution dont la transformée de Fourier comporte le même nombre de points que le  nombre d'échantillons dans le signal mesuré. Outre le fait que cette technique offre une souplesse d'utilisation supplémentaire par rapport aux autres méthodes, MLS par exemple, elle fournit des résolutions fréquentielles très grandes, notamment aux basses fréquences. Elle rend également très aisée et rapide la déduction des taux de distortions du système mesuré \cite{muller}.
+La structure d'analyse de CNAQ utilise la méthode d'Angelo Farina \cite{farina} qui, appliquée dans le domaine numérique, permet d'obtenir des réponses avec un grand nombre d'échantillons, même à très basse fréquence, tout en suivant les harmoniques créés au cours du glissement en fréquence. Le calcul est en effet basé sur un produit de convolution dont la transformée de Fourier comporte le même nombre de points que le  nombre d'échantillons dans le signal mesuré. Outre le fait que cette technique offre une souplesse d'utilisation supplémentaire par rapport aux autres méthodes, MLS par exemple, elle fournit des résolutions fréquentielles très grandes, notamment aux basses fréquences. Elle rend également très aisée et rapide la déduction des taux de distortions du système mesuré \cite{muller}.
 
-Le logiciel CNACQ offre ainsi une interface interactive pour mesurer et calculer les fonctions de transfert directement dans Matlab. Il s'inspire pour certaines idées du logiciel libre QLoud \cite{qloud} fonctionnant sur système GNU/Linux.
+Le logiciel CNAQ offre ainsi une interface interactive pour mesurer et calculer les fonctions de transfert directement dans Matlab. Il s'inspire pour certaines idées du logiciel libre QLoud \cite{qloud} fonctionnant sur système GNU/Linux.
 
 
 \section{Licence}
 
-Ce logiciel libre CNACQ est régi par la licence CeCILL soumise au droit français et
+Ce logiciel libre CNAQ est régi par la licence CeCILL soumise au droit français et
 respectant les principes de diffusion des logiciels libres. Vous pouvez
 utiliser, modifier et/ou redistribuer ce programme sous les conditions
 de la licence CeCILL telle que diffusée par le CEA, le CNRS et l'INRIA
@@ -94,11 +94,11 @@ termes.
 
 \section{Téléchargement}
 
-CNACQ est librement téléchargeable à l'adresse suivante : \url{http://svn.parisson.org/cnacq/} où il est conseillé de choisir la dernière version.
+CNAQ est librement téléchargeable à l'adresse suivante : \url{http://svn.parisson.org/cnaq/} où il est conseillé de choisir la dernière version.
 
 Pour obtenir la version de développement, il est nécessaire d'utiliser le logiciel Subversion\footnote{\url{http://subversion.tigris.org/}} et d'utiliser la commande :
 \begin{verbatim}
- svn co https://svn.parisson.org/svn/CNACQ/trunk CNACQ
+ svn co https://svn.parisson.org/svn/CNAQ/trunk CNACQ
 \end{verbatim}
 
 
@@ -110,32 +110,32 @@ Pour obtenir la version de développement, il est nécessaire d'utiliser le logici
 \item Une carte audio compatible ASIO et ses pilotes ASIO installés.\\
 \end{itemize}
 
-CNACQ utilise deux principes pour converser avec la carte d'acquisition. D'une part, les fonctions d'émission du générateur propres à Matlab sur la base du driver \textit{Winsound} permettent d'utiliser le monitoring graphique en parallèle de l'émission. D'autre part, les librairies \textit{pa-wavplay} \cite{pawavplay} utilisant la norme ASIO facilitent le calcul des fonctions de transfert grâce à une taille de tampon mémoire mieux gérée.
+CNAQ utilise deux principes pour converser avec la carte d'acquisition. D'une part, les fonctions d'émission du générateur propres à Matlab sur la base du driver \textit{Winsound} permettent d'utiliser le monitoring graphique en parallèle de l'émission. D'autre part, les librairies \textit{pa-wavplay} \cite{pawavplay} utilisant la norme ASIO facilitent le calcul des fonctions de transfert grâce à une taille de tampon mémoire mieux gérée.
 
 
 \section{Lancement}\label{lancement}
 
-%Dans cette documentation, nous considérerons que le dossier décompressé de l'application se trouve à l'addresse \texttt{C:\CNACQ}. Si l'application a été décompréssée dans un autre dossier, modifier les exemples suivants en conséquence.
+%Dans cette documentation, nous considérerons que le dossier décompressé de l'application se trouve à l'addresse \texttt{C:\CNAQ}. Si l'application a été décompréssée dans un autre dossier, modifier les exemples suivants en conséquence.
 
 \begin{enumerate}
  \item Démarrer Matlab.
- \item Exécuter le fichier CNACQ.m depuis le dossier décompressé de l'application CNACQ, par exemple \verb|C:\CNACQ|. Avant de démarrer, l'application demande de fournir un dossier de travail. Ce dossier peut être vide mais doit exister (le créer dans l'explorateur si nécessaire avec un nom explicite) : il intégrera l'ensemble des fichiers sauvegardés pendant les mesures. Une fenêtre semblable à la figure \ref{cnacq_default} doit alors s'afficher.
+ \item Exécuter le fichier CNAQ.m depuis le dossier décompressé de l'application CNACQ, par exemple \verb|C:\CNACQ|. Avant de démarrer, l'application demande de fournir un dossier de travail. Ce dossier peut être vide mais doit exister (le créer dans l'explorateur si nécessaire avec un nom explicite) : il intégrera l'ensemble des fichiers sauvegardés pendant les mesures. Une fenêtre semblable à la figure \ref{cnaq_default} doit alors s'afficher.
 
     \begin{figure}[htbp]
       \centering
-      \includegraphics[width=12cm]{img/cnacq_02}
-      \caption{Fenêtre de démarrage par défaut du logiciel CNACQ.}
-      \label{cnacq_default}
+      \includegraphics[width=12cm]{img/cnaq_02}
+      \caption{Fenêtre de démarrage par défaut du logiciel CNAQ.}
+      \label{cnaq_default}
     \end{figure}
 
  \item Remplir les champs << Nom d'utilisateur >> et << Commentaires >>.
- \item Démarrer le vu-mètre stereo : \verb|C:\CNACQ\vu-meters\meterV.exe|.
+ \item Démarrer le vu-mètre stereo : \verb|C:\CNAQ\vu-meters\meterV.exe|.
 \end{enumerate}
 
 
 \section{Détails de l'interface}
 
-L'interface graphique de CNACQ comporte 6 blocs principaux dont voici les descriptions :
+L'interface graphique de CNAQ comporte 6 blocs principaux dont voici les descriptions :
 
 \begin{description}
  \item[Données :] les données générales de la prochaine mesure : le nom de groupe (à remplir), les commentaires (optionnels), le dossier de travail à choisir (bouton \textbf{Browse}), la fréquence d'échantillonnage \textbf{$F_s$} en Hz et le nombre de bits \textbf{Nbits} de la quantification.\\
@@ -143,7 +143,7 @@ L'interface graphique de CNACQ comporte 6 blocs principaux dont voici les descri
  \item[Infos :]	les informations de copyright et de version de l'application utilisée.\\
 
  \item[Moniteur :] les fenêtres d'affichage en temps réel des signaux entrant par la voie n°1. Au démarrage, l'affichage est désactivé. La première fenêtre est la forme d'onde temporelle du signal par blocs de 1 s et la deuxième le module de la transformée de Fourier de chaque  bloc numérisé. Cette fonction est démarrée en appuyant sur le bouton \textbf{ON/OFF} et stoppée de la même manière.\\
- \textbf{Remarque :} les fonctions d'affichage de Matlab imposent une priorité maximale de l'affichage de CNACQ lorsque le moniteur est enclenché. Pour pouvoir intervenir sur d'autres fenêtres dans l'environnement Windows, il est donc nécessaire de \textbf{stopper le moniteur}.\\
+ \textbf{Remarque :} les fonctions d'affichage de Matlab imposent une priorité maximale de l'affichage de CNAQ lorsque le moniteur est enclenché. Pour pouvoir intervenir sur d'autres fenêtres dans l'environnement Windows, il est donc nécessaire de \textbf{stopper le moniteur}.\\
 
  \item[Voies :] les voies entrantes et sortantes utilisées de la carte d'acquisition et leurs gains associées dans l'intervalle $[0;1]$.\\
 
@@ -224,6 +224,6 @@ Lorsqu'aucune licence Matlab n'est disponible (chez soi par exemple), il est pos
 \newpage
 \bibliographystyle{apalike}
 \nocite{*}
-\bibliography{biblio_cnacq}
+\bibliography{biblio_cnaq}
 
 \end{document}

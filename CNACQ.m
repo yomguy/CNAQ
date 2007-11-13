@@ -1,5 +1,5 @@
-function varargout = CNACQ(varargin)
-%  CNACQ M-file for CNACQ.fig
+function varargout = CNAQ(varargin)
+%  CNAQ M-file for CNAQ.fig
 %
 %  Copyright (c) 2007 Guillaume Pellerin <guillaume.pellerin@cnam.fr>
 %  All rights reserved.
@@ -30,26 +30,26 @@ function varargout = CNACQ(varargin)
 %  The fact that you are presently reading this means that you have had
 %  knowledge of the CeCILL license given in the file COPYING and
 %  that you accept its terms. The terms are also available at
-%  http://svn.parisson.org/cnacq/wiki/CnacqLicense.
+%  http://svn.parisson.org/cnaq/wiki/CnacqLicense.
 
 %  Author: Guillaume Pellerin <guillaume.pellerin@cnam.fr>
 
 % Last Modified by GUIDE v2.5 07-Nov-2007 18:26:57
 
-%      CNACQ, by itself, creates a new CNACQ or raises the existing
+%      CNAQ, by itself, creates a new CNAQ or raises the existing
 %      singleton*.
 %
-%      H = CNACQ returns the handle to a new CNACQ or the handle to
+%      H = CNAQ returns the handle to a new CNAQ or the handle to
 %      the existing singleton*.
 %
-%      CNACQ('CALLBACK',hObject,eventData,handles,...) calls the local
-%      function named CALLBACK in CNACQ.M with the given input arguments.
+%      CNAQ('CALLBACK',hObject,eventData,handles,...) calls the local
+%      function named CALLBACK in CNAQ.M with the given input arguments.
 %
-%      CNACQ('Property','Value',...) creates a new CNACQ or raises the
+%      CNAQ('Property','Value',...) creates a new CNAQ or raises the
 %      existing singleton*.  Starting from the left, property value pairs are
-%      applied to the GUI before CNACQ_OpeningFunction gets called.  An
+%      applied to the GUI before CNAQ_OpeningFunction gets called.  An
 %      unrecognized property name or invalid value makes property application
-%      stop.  All inputs are passed to CNACQ_OpeningFcn via varargin.
+%      stop.  All inputs are passed to CNAQ_OpeningFcn via varargin.
 %
 %      *See GUI Options on GUIDE's Tools menu.  Choose "GUI allows only one
 %      instance to run (singleton)".
@@ -64,8 +64,8 @@ function varargout = CNACQ(varargin)
 gui_Singleton = 1;
 gui_State = struct('gui_Name',       mfilename, ...
                    'gui_Singleton',  gui_Singleton, ...
-                   'gui_OpeningFcn', @CNACQ_OpeningFcn, ...
-                   'gui_OutputFcn',  @CNACQ_OutputFcn, ...
+                   'gui_OpeningFcn', @CNAQ_OpeningFcn, ...
+                   'gui_OutputFcn',  @CNAQ_OutputFcn, ...
                    'gui_LayoutFcn',  [] , ...
                    'gui_Callback',   []);
 if nargin && ischar(varargin{1})
@@ -82,22 +82,22 @@ end
 
 %global out_button_value in_button_value gen_button_value mes_button_value f_s n_bits;
 
-% --- Executes just before CNACQ is made visible.
-function CNACQ_OpeningFcn(hObject, eventdata, handles, varargin)
+% --- Executes just before CNAQ is made visible.
+function CNAQ_OpeningFcn(hObject, eventdata, handles, varargin)
 % This function has no output args, see OutputFcn.
 % hObject    handle to figure
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-% varargin   command line arguments to CNACQ (see VARARGIN)
+% varargin   command line arguments to CNAQ (see VARARGIN)
 
-% Choose default command line output for CNACQ
+% Choose default command line output for CNAQ
 handles.output = hObject;
 
 % Update handles structure
 guidata(hObject, handles);
 
 % --- Outputs from this function are returned to the command line.
-function varargout = CNACQ_OutputFcn(hObject, eventdata, handles) 
+function varargout = CNAQ_OutputFcn(hObject, eventdata, handles) 
 % varargout  cell array for returning output args (see VARARGOUT);
 % hObject    handle to figure
 % eventdata  reserved - to be defined in a future version of MATLAB
@@ -107,7 +107,7 @@ function varargout = CNACQ_OutputFcn(hObject, eventdata, handles)
 varargout{1} = handles.output;
 
 
-% UIWAIT makes CNACQ wait for user response (see UIRESUME)
+% UIWAIT makes CNAQ wait for user response (see UIRESUME)
 % uiwait(handles.figure1);
 % ==============================================================
 
@@ -116,19 +116,19 @@ varargout{1} = handles.output;
 % INIT
 % ==============================================================
 
-cnacq_version = '0.1';
+cnaq_version = '0.1';
 
 % Get/Set home_dir & paths
-root_dir = 'E:\CNACQ';
+root_dir = 'E:\CNAQ';
 home_dir = uigetdir(root_dir, 'Choisissez votre dossier de travail');
 set(handles.home_dir_box,'String',home_dir);
 
 % Get tools
-%cnacq_path = pwd;
-cnacq_path = root_dir;
-manu_path = [cnacq_path '\Manulab\'];
-tools_path = [cnacq_path '\tools\'];
-path(path, cnacq_path);
+%cnaq_path = pwd;
+cnaq_path = root_dir;
+manu_path = [cnaq_path '\Manulab\'];
+tools_path = [cnaq_path '\tools\'];
+path(path, cnaq_path);
 path(path, manu_path);
 path(path, tools_path);
 
@@ -136,10 +136,10 @@ path(path, tools_path);
 id = get_id(handles);
 set(handles.ID,'String',id);
 
-set(handles.info1_text,'String',['CNACQ v' cnacq_version ' - Copyright (C) 2007']);
-set(handles.info2_text,'String','Guillaume Pellerin, Manuel Melon (CNAM Paris)  http://svn.parisson.org/cnacq/');
+set(handles.info1_text,'String',['CNAQ v' cnaq_version ' - Copyright (C) 2007']);
+set(handles.info2_text,'String','Guillaume Pellerin, Manuel Melon (CNAM Paris)  http://svn.parisson.org/cnaq/');
 
-%set(handles.home_dir_box,'C:\CNACQ\');
+%set(handles.home_dir_box,'C:\CNAQ\');
 
 set(handles.f_gen_min,'String','20');
 set(handles.f_gen_max,'String','20000');

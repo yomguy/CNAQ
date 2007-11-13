@@ -1,13 +1,13 @@
 # README
 # ======
 
-CNACQ : a Matlab acquisition tool for computing transfert function over ASIO cards
+CNAQ : a Matlab acquisition tool for computing transfert function over ASIO cards
 
 
 # 1. Introduction
 # ===============
 
-CNACQ est un programme de génération, d'émission et d'acquisition de signaux
+CNAQ est un programme de génération, d'émission et d'acquisition de signaux
 écrit pour Matlab. Il utilise les cartes son intégrant le protocole ASIO pour
 déterminer les fonctions de transfert des systèmes électro-dynamiques.
 
@@ -35,7 +35,7 @@ are also available at http://svn.parisson.org/cnacq/CnacqLicense
 # 4. Usage
 # =========
 
-Just open CNACQ.m in Matlab and run it...
+Just open CNAQ.m in Matlab and run it...
 
  
 # 5. Authors

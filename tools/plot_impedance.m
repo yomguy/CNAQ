@@ -1,11 +1,11 @@
-% Loudspeaker impedance post-processing from a 2 voice acquisition from CNACQ
+% Loudspeaker impedance post-processing from a 2 voice acquisition from CNAQ
 % Copyright (C) Guillaume Pellerin
 
 function plot_impedance(fic_resitance, fic_hp, R_c, option)
 
-% fic_resistance : the (CNACQ) MAT file containing the transfert function of the
+% fic_resistance : the (CNAQ) MAT file containing the transfert function of the
 % resistance
-% fic_hp = the (CNACQ) MAT file containing the the transfert function of the
+% fic_hp = the (CNAQ) MAT file containing the the transfert function of the
 % loudspeaker
 % R_c = the value of the resistance (Ohm)
 % option : 'lin' or 'log' to plot the frequency with a linear or
