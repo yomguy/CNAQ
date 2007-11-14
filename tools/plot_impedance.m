@@ -12,10 +12,11 @@ function plot_impedance(fic_resitance, fic_hp, R_c, option)
 % logarithmic scale respectively
 
 load(fic_resitance);
+U_r = sig_mes(:,1);
 I_r = sig_mes(:,1)/R_c;
 
 load(fic_hp);
-U_hp = sig_mes(:,1);
+U_hp = sig_mes(:,1)-U_r;
 
 %i = sig_mes(:,1);
 %u = sig_mes(:,2);
