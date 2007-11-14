@@ -155,13 +155,17 @@ L'interface graphique de CNAQ comporte 6 blocs principaux dont voici les descrip
  \item[Mesure :] les fonctions de mesure de fonctions de transfert selon la méthode de Farina.\\
 	Les valeurs des bornes fréquentielles pour la génération du chirp ainsi que sa durée sont issues de celles du bloc Générateur.\\
 	Le bouton \textbf{TRIG} lance la mesure et affiche les résultats temporels (réponse temporelle et réponse impulsionnelle) et fréquentiels (module et phase) dans de nouvelles fenêtres pour chaque voie.\\
-	Le bouton \textbf{Sauver} sauvegarde l'ensemble des paramètres de la fenêtre, le signal émis ainsi que tous les signaux temporels mesurés dans un fichier de type MAT dans le dossier de travail. Le nom de ce fichier comporte le nom du groupe et l'\textbf{ID} de la mesure. Cette valeur s'incrémente automatiquement après chaque sauvegarde.
+	Le bouton \textbf{Sauver} sauvegarde l'ensemble des paramètres de la fenêtre, le signal émis ainsi que tous les signaux temporels mesurés dans un fichier de type MAT dans le dossier de travail. Le nom de ce fichier comporte le nom du groupe et l'\textbf{ID} de la mesure. Cette valeur s'incrémente automatiquement après chaque sauvegarde.\\
 	Le bouton \textbf{Plot last} trace la dernière mesure effectuée.
 \end{description}
 
 
 \section{Première mesure}
 
+\subsection{Mise en garde}
+Avant toute opération, un point sensible est à mettre en évidence pour éviter tout problème. En effet, dans l'état du programme à ce jour (v0.1), bien que les fréquences de mesure inférieures et supérieures peuvent être quelconques, CNAQ génére systématiquement le sinus glissant entre les fréquences 1 et $F_s/2$ Hz. A ce signal est appliqué une enveloppe temporelle de type Hanning (attaque et relâchement) qui empêchent les effets de bord d'émerger lors du calcul de la fonction de transfert. Ainsi, il est possible que des fréquences plus basses que celles demandées soient envoyées aux appareils à mesurer. \textbf{ATTENTION} donc à vérifier le niveau de sortie des amplificateurs pour éviter la casse... Néanmoins, les bornes définies sont respectées pour le tracé des résultats.
+
+\subsection{Opérations}
 Voici une chronologie des étapes à suivre pour la mesure d'une fonction de transfert, après avoir effectué celles du paragraphe \ref{lancement}.
 
 \begin{enumerate}
