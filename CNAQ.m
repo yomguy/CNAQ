@@ -126,11 +126,11 @@ set(handles.home_dir_box,'String',home_dir);
 % Get tools
 %cnaq_path = pwd;
 cnaq_path = root_dir;
-manu_path = [cnaq_path '\Manulab\'];
 tools_path = [cnaq_path '\tools\'];
+pa_path = [cnaq_path '\pa_wavplay\'];
 path(path, cnaq_path);
-path(path, manu_path);
 path(path, tools_path);
+path(path, pa_path);
 
 % Get/Set ID
 id = get_id(handles);
@@ -526,7 +526,7 @@ function mes_on_Callback(hObject, eventdata, handles)
     gain_out = 10^(gain_out/20);
     
     % Avoid Gibbs like phenomenon
-    f0 = 0.1;
+    f0 = 1;
     f1 = f_min;
     f2 = f_max;
     f3 = f_s/2;
@@ -553,9 +553,9 @@ function mes_on_Callback(hObject, eventdata, handles)
     sig_exc = sig_exc.*mask;
     
     % Synchronizing
-    %The number of samples in the buffer (latency of the sound card in
-    %samples. See tests/testacqui.m)
-    delay = 588;  
+    % The number of samples in the buffer (latency of the sound card in
+    % samples. See tests/testacqui.m)
+    delay = 588; 
     zero = zeros(1,delay);
     % Zeros are added before and removed after
     sig_exc_z = [sig_exc zero];
@@ -697,8 +697,4 @@ function save_button_Callback(hObject, eventdata, handles)
     % Increment ID
     increment_id(handles);
     
-    
-
    
-
-
