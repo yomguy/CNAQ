@@ -55,11 +55,11 @@
 
 \section{Introduction}
 
-CNAQ est un logiciel dédié à la mesure de fonctions de transfert des systèmes électriques ou électrodynamiques. Ecrit en langage Matlab, il permet d'utiliser une carte d'acquisition audio compatible avec la norme ASIO pour générer un signal de type sinus glissant (<< sweep >> ou << chirp >> en anglais), de quantifier la réponse temporelle du système puis d'en déterminer sa réponse fréquentielle.
+CNAQ est un logiciel dédié à la mesure de fonctions de transfert des systèmes électriques ou électrodynamiques. Ecrit en langage Matlab, il permet d'utiliser une carte d'acquisition audio compatible avec la norme ASIO pour générer un signal de type sinus glissant (<< sweep >> ou << chirp >> en anglais), de quantifier la réponse temporelle du système puis d'en déterminer sa réponse fréquentielle. Ce logiciel est développé dans le cadre de la rénovation des modules de travaux pratiques d'acoustique dispensés au CNAM de Paris.
 
-La structure d'analyse de CNAQ utilise la méthode d'Angelo Farina \cite{farina} qui, appliquée dans le domaine numérique, permet d'obtenir des réponses avec un grand nombre d'échantillons, même à très basse fréquence, tout en suivant les harmoniques créés au cours du glissement en fréquence. Le calcul est en effet basé sur un produit de convolution dont la transformée de Fourier comporte le même nombre de points que le  nombre d'échantillons dans le signal mesuré. Outre le fait que cette technique offre une souplesse d'utilisation supplémentaire par rapport aux autres méthodes, MLS par exemple, elle fournit des résolutions fréquentielles très grandes, notamment aux basses fréquences. Elle rend également très aisée et rapide la déduction des taux de distortions du système mesuré \cite{muller}.
+La structure d'analyse de CNAQ utilise la méthode d'Angelo Farina \cite{farina} qui, appliquée dans le domaine numérique, permet d'obtenir des réponses avec un grand nombre d'échantillons, même à très basse fréquence, tout en suivant les harmoniques créés au cours du glissement en fréquence. Le calcul est en effet basé sur un produit de convolution dont la transformée de Fourier comporte le même nombre de points que le nombre d'échantillons dans le signal mesuré. Outre le fait que cette technique offre une souplesse d'utilisation supplémentaire par rapport aux autres méthodes, MLS par exemple, elle fournit des résolutions fréquentielles très élevés, notamment aux basses fréquences. Elle rend également aisée et rapide la déduction des taux de distortions du système mesuré \cite{muller}.
 
-Le logiciel CNAQ offre ainsi une interface interactive pour mesurer et calculer les fonctions de transfert directement dans Matlab. Il s'inspire pour certaines idées du logiciel libre QLoud \cite{qloud} fonctionnant sur système GNU/Linux.
+Le logiciel CNAQ offre ainsi une interface interactive pour mesurer et calculer les fonctions de transfert directement dans Matlab. Il s'inspire Il s'inspire entre autres de l'excellent logiciel libre QLoud \cite{qloud} fonctionnant sur système GNU/Linux.
 
 
 \section{Licence}
@@ -94,11 +94,11 @@ termes.
 
 \section{Téléchargement}
 
-CNAQ est librement téléchargeable à l'adresse suivante : \url{http://svn.parisson.org/cnaq/} où il est conseillé de choisir la dernière version.
+CNAQ est librement téléchargeable à l'adresse suivante : \url{http://svn.parisson.org/cnaq/} où il est conseillé de choisir la dernière version au format tar.gz.
 
-Pour obtenir la version de développement, il est nécessaire d'utiliser le logiciel Subversion\footnote{\url{http://subversion.tigris.org/}} et d'utiliser la commande :
+Pour obtenir la version de développement, il est nécessaire d'utiliser le logiciel Subversion\footnote{\url{http://subversion.tigris.org/} pour Linux, ou \url{http://tortoisesvn.tigris.org/} pour Windows} et d'appliquer la commande :
 \begin{verbatim}
- svn co https://svn.parisson.org/svn/CNAQ/trunk CNAQ
+ svn co http://svn.parisson.org/svn/CNAQ/trunk CNAQ
 \end{verbatim}
 
 
@@ -156,6 +156,7 @@ L'interface graphique de CNAQ comporte 6 blocs principaux dont voici les descrip
 	Les valeurs des bornes fréquentielles pour la génération du chirp ainsi que sa durée sont issues de celles du bloc Générateur.\\
 	Le bouton \textbf{TRIG} lance la mesure et affiche les résultats temporels (réponse temporelle et réponse impulsionnelle) et fréquentiels (module et phase) dans de nouvelles fenêtres pour chaque voie.\\
 	Le bouton \textbf{Sauver} sauvegarde l'ensemble des paramètres de la fenêtre, le signal émis ainsi que tous les signaux temporels mesurés dans un fichier de type MAT dans le dossier de travail. Le nom de ce fichier comporte le nom du groupe et l'\textbf{ID} de la mesure. Cette valeur s'incrémente automatiquement après chaque sauvegarde.
+	Le bouton \textbf{Plot last} trace la dernière mesure effectuée.
 \end{description}
 
 
@@ -219,7 +220,9 @@ Deux commandes fondamentales permettent de trouver/retrouver une commande Matlab
 \end{itemize}
 
 \subsection{Octave}
-Lorsqu'aucune licence Matlab n'est disponible (chez soi par exemple), il est possible d'utiliser le logiciel libre et gratuit \textbf{Octave} \cite{octave} pour l'analyse des mesures. Ce logiciel, bien que moins complet que Matlab, dispose des mêmes fonctions principales que lui et surtout du même langage ! On peut donc - après avoir téléchargé, installé et démarré Octave - récupérer les mesures muni du fichier de sauvegarde .mat et exécuter directement les commandes vues aux paragraphes \ref{depouillement_1} et \ref{depouillement_2}.
+Lorsqu'aucune licence Matlab n'est disponible (chez soi par exemple), il est possible d'utiliser le logiciel libre et gratuit \textbf{Octave} \cite{octave} pour l'analyse des mesures. Ce logiciel, bien que moins complet que Matlab, dispose des mêmes fonctions principales que lui et surtout du même langage ! On peut donc - après avoir téléchargé, installé et démarré Octave - récupérer les mesures à partir du fichier de sauvegarde .mat et exécuter directement les commandes vues aux paragraphes \ref{depouillement_1} et \ref{depouillement_2}.\\
+
+\textbf{Attention :} Octave ne permettra pas de faire fonctionner l'interface graphique CNAQ, uniquement les routines de post-traitement.
 
 \newpage
 \bibliographystyle{apalike}

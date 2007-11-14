@@ -30,7 +30,7 @@ function varargout = CNAQ(varargin)
 %  The fact that you are presently reading this means that you have had
 %  knowledge of the CeCILL license given in the file COPYING and
 %  that you accept its terms. The terms are also available at
-%  http://svn.parisson.org/cnaq/wiki/CnacqLicense.
+%  http://svn.parisson.org/cnaq/wiki/CnaqLicense.
 
 %  Author: Guillaume Pellerin <guillaume.pellerin@cnam.fr>
 
