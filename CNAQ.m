@@ -123,6 +123,9 @@ root_dir = 'E:\CNAQ';
 home_dir = uigetdir(root_dir, 'Choisissez votre dossier de travail');
 set(handles.home_dir_box,'String',home_dir);
 
+% Audio device number
+device = 0;
+
 % Get tools
 %cnaq_path = pwd;
 cnaq_path = root_dir;
@@ -170,7 +173,7 @@ set(handles.sig_type,'String','Sinus|Chirp');
 set(handles.voices_in,'String','1|1 2|1 2 3|1 2 3 4');
 set(handles.voices_out,'String','1|1 2|1 2 3|1 2 3 4');
 
-buffer = 2048;
+buffer = 4096;
 os_sep = '\';
 
 % ==============================================================
@@ -291,8 +294,8 @@ function get_home_dir_Callback(hObject, eventdata, handles)
 % MONITOR
 %============================================
     
-function in_on_off_Callback(hObject, eventdata, handles)
-    device = 0;
+function in_on_off_Callback(hObject, eventdata, handles, device)
+    %device = 0;
     buffer = 4096;
     window = hanning(buffer);
     f_s = get_fs(handles);
@@ -483,22 +486,24 @@ function gen_on_off_Callback(hObject, eventdata, handles)
         sig_out(:,i) = sig';
     end
     
-    % Matlab way...
-    ao = analogoutput('winsound', 0);
-    addchannel(ao, voices_out);
-    set(ao, 'StandardSampleRates', 'Off');
-    set(ao, 'SampleRate', f_s);
-    
-    if get(handles.gen_on_off,'Value') == 1
-        putdata(ao, sig_out);
-        start(ao);
-        set(handles.gen_on_off,'Value',0);
-    end
-    
-    %delete(ao);
+    % Matlab way (needs Data Acquisition Toolbox)
+%      ao = analogoutput('winsound', 0);
+%      addchannel(ao, voices_out);
+%      set(ao, 'StandardSampleRates', 'Off');
+%      set(ao, 'SampleRate', f_s);
+%      
+%      if get(handles.gen_on_off,'Value') == 1
+%          putdata(ao, sig_out);
+%          start(ao);
+%          set(handles.gen_on_off,'Value',0);
+%      end
+%      %delete(ao);
 
     % PA way but can't work with monitor !...
     % pa_wavplay(sig_out',f_s,0,'asio');
+
+    % Winsoud way...
+    sound(sig_out',f_s);
 
 
 %============================================
@@ -512,8 +517,8 @@ function mes_type_CreateFcn(hObject, eventdata, handles)
         set(hObject,'BackgroundColor','white');
     end
 
-function mes_on_Callback(hObject, eventdata, handles)
-    device = 0;
+function mes_on_Callback(hObject, eventdata, handles, device)
+    %device = 0;
     nfft = 16384;
     f_min = str2double(get(handles.f_gen_min,'String'));
     f_max = str2double(get(handles.f_gen_max,'String'));
