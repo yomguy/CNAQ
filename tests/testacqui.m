@@ -11,8 +11,9 @@ len_sig = length(sig);
 for i = 1:n
     i
     pause(0.1)
-    inputbuffer = pa_wavplayrecord(sig',0,[44100],0,[1],[1],0,['asio']);
-    Co=crosscorr(sig',inputbuffer',length(inputbuffer)-1);
+    inputbuffer = pa_wavplayrecord(sig',1,[44100],0,[1],[1],1,['asio']);
+    Co=xcorr(sig',inputbuffer');
+%         Co=crosscorr(sig',inputbuffer',length(inputbuffer)-1);
     [Y(i),I(i)] = max(Co);
     I(i)-len_sig
 end
