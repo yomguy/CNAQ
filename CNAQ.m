@@ -111,22 +111,21 @@ varargout{1} = handles.output;
 % uiwait(handles.figure1);
 % ==============================================================
 
+cnaq_version = '0.1';
+        
+% ==============================================================
+% PARAMETERS
+% ==============================================================
+        
+root_dir = 'E:\CNAQ'; % The directory where CNAQ is installed
+device = 1;  % The ASIO device number in the audio sytem
+delay = 588; % The number of samples in the buffer (latency of the sound card in
+             % samples. See tests/testacqui.m to know your delay)
 
 % ==============================================================
 % INIT
 % ==============================================================
 
-cnaq_version = '0.1';
-
-% Get/Set home_dir & paths
-root_dir = 'E:\CNAQ';
-home_dir = uigetdir(root_dir, 'Choisissez votre dossier de travail');
-set(handles.home_dir_box,'String',home_dir);
-
-% Audio device number
-device = 0;
-
-% Get tools
 %cnaq_path = pwd;
 cnaq_path = root_dir;
 tools_path = [cnaq_path '\tools\'];
@@ -138,7 +137,7 @@ path(path, pa_path);
 % Get/Set ID
 id = get_id(handles);
 set(handles.ID,'String',id);
-
+set(handles.home_dir_box,'String',home_dir);
 set(handles.info1_text,'String',['CNAQ v' cnaq_version ' - Copyright (C) 2007']);
 set(handles.info2_text,'String','Guillaume Pellerin, Manuel Melon (CNAM Paris)  http://svn.parisson.org/cnaq/');
 
@@ -172,10 +171,12 @@ set(handles.gen_on_off,'Value',0);
 set(handles.sig_type,'String','Sinus|Chirp');
 set(handles.voices_in,'String','1|1 2|1 2 3|1 2 3 4');
 set(handles.voices_out,'String','1|1 2|1 2 3|1 2 3 4');
-set(handles.in_on_off,'UserData',device);
 
-buffer = 4096;
-os_sep = '\';
+set(handles.in_on_off,'UserData',device);
+set(handles.save_button,'UserData',delay);
+
+home_dir = uigetdir(root_dir, 'Choisissez votre dossier de travail');
+
 
 % ==============================================================
 % TOOLS
@@ -520,6 +521,7 @@ function mes_type_CreateFcn(hObject, eventdata, handles)
 
 function mes_on_Callback(hObject, eventdata, handles, device)
     device = get(handles.in_on_off,'UserData');
+    delay = get(handles.save_button,'UserData');
     nfft = 16384;
     f_min = str2double(get(handles.f_gen_min,'String'));
     f_max = str2double(get(handles.f_gen_max,'String'));
@@ -559,9 +561,6 @@ function mes_on_Callback(hObject, eventdata, handles, device)
     sig_exc = sig_exc.*mask;
     
     % Synchronizing
-    % The number of samples in the buffer (latency of the sound card in
-    % samples. See tests/testacqui.m)
-    delay = 588; 
     zero = zeros(1,delay);
     % Zeros are added before and removed after
     sig_exc_z = [sig_exc zero];
