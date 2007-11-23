@@ -172,6 +172,7 @@ set(handles.gen_on_off,'Value',0);
 set(handles.sig_type,'String','Sinus|Chirp');
 set(handles.voices_in,'String','1|1 2|1 2 3|1 2 3 4');
 set(handles.voices_out,'String','1|1 2|1 2 3|1 2 3 4');
+set(handles.in_on_off,'UserData',device);
 
 buffer = 4096;
 os_sep = '\';
@@ -294,8 +295,8 @@ function get_home_dir_Callback(hObject, eventdata, handles)
 % MONITOR
 %============================================
     
-function in_on_off_Callback(hObject, eventdata, handles, device)
-    %device = 0;
+function in_on_off_Callback(hObject, eventdata, handles)
+    device = get(handles.in_on_off,'UserData');
     buffer = 4096;
     window = hanning(buffer);
     f_s = get_fs(handles);
@@ -518,7 +519,7 @@ function mes_type_CreateFcn(hObject, eventdata, handles)
     end
 
 function mes_on_Callback(hObject, eventdata, handles, device)
-    %device = 0;
+    device = get(handles.in_on_off,'UserData');
     nfft = 16384;
     f_min = str2double(get(handles.f_gen_min,'String'));
     f_max = str2double(get(handles.f_gen_max,'String'));
