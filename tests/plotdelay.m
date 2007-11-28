@@ -26,7 +26,7 @@ ecart=std(delai);
 mfvt =num2str(mfv);
 sprintf('%s','the most frequent delay is ', mfvt,' samples.')
 
-Plot results
+%Plot results
 hist(delai)
 title('delay distribution')
 xlabel('delay')
