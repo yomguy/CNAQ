@@ -1,4 +1,4 @@
-function [mfv,ecart]=getdelay(n)
+function [mfv,ecart]=plotdelay(n)
 %this function allows measuring the lattency of the playrecord process for
 %n generation/acquisition operations
 if nargin < 1, n = 10; end
@@ -6,9 +6,9 @@ if nargin < 1, n = 10; end
 %signal generation
 f_min=100;
 f_max=20000;
-lt=5;  
+lt=2;  
 t=0:1/44100:lt;
-sig=0.9*chirp(t,20,lt,20000,'logarithmic');
+sig=0.9*chirp(t,f_min,lt,f_max,'logarithmic');
 len_sig = length(sig);
 
 %playrecord signal
@@ -21,10 +21,10 @@ for it = 1:n
        
 end
 
-mfv=mode(delai);
-ecart=std(delai);
-mfvt =num2str(mfv);
-sprintf('%s','the most frequent delay is ', mfvt,' samples.')
+% % mfv=mode(delai);
+% % ecart=std(delai);
+% mfvt =num2str(mfv);
+% sprintf('%s','the most frequent delay is ', mfvt,' samples.')
 
 %Plot results
 hist(delai)
