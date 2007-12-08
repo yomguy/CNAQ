@@ -133,6 +133,7 @@ pa_path = [cnaq_path '\pa_wavplay\'];
 path(path, cnaq_path);
 path(path, tools_path);
 path(path, pa_path);
+home_dir = uigetdir(root_dir, 'Choisissez votre dossier de travail');
 
 % Get/Set ID
 id = get_id(handles);
@@ -174,9 +175,6 @@ set(handles.voices_out,'String','1|1 2|1 2 3|1 2 3 4');
 
 set(handles.in_on_off,'UserData',device);
 set(handles.save_button,'UserData',delay);
-
-home_dir = uigetdir(root_dir, 'Choisissez votre dossier de travail');
-
 
 % ==============================================================
 % TOOLS
