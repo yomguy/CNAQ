@@ -117,15 +117,25 @@ cnaq_version = '0.1';
 % PARAMETERS
 % ==============================================================
         
-root_dir = pwd; % The directory where CNAQ is installed
-device = 1;  % The ASIO device number in the audio sytem
-delay = 588; % The number of samples in the buffer (latency of the sound card in
-             % samples. See tests/testacqui.m to know your delay)
+% The ASIO device number in the audio sytem
+device = 0;  
+
+% The number of samples in the buffer of the sound card
+% (delay * f_s = latency time)
+% It IS necessary that you compute this value BEFORE any measurement
+% executing ./tests/get_latency.m in MATLAB like this :
+% >> get_latency(DEVICE, N)
+% where DEVICE is the device number (see above) and N the number of 
+% successive measurements
+% If this value is wrong, the phasis results might be also wrong...
+delay = 587;
+
 
 % ==============================================================
 % INIT
 % ==============================================================
 
+root_dir = pwd; % The directory where CNAQ is installed
 %cnaq_path = pwd;
 cnaq_path = root_dir;
 tools_path = [cnaq_path '\tools\'];
