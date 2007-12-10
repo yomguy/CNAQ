@@ -117,7 +117,7 @@ cnaq_version = '0.1';
 % PARAMETERS
 % ==============================================================
         
-root_dir = 'E:\CNAQ'; % The directory where CNAQ is installed
+root_dir = pwd; % The directory where CNAQ is installed
 device = 1;  % The ASIO device number in the audio sytem
 delay = 588; % The number of samples in the buffer (latency of the sound card in
              % samples. See tests/testacqui.m to know your delay)
