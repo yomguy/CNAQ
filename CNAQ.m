@@ -114,7 +114,7 @@ varargout{1} = handles.output;
 cnaq_version = '0.1';
         
 % ==============================================================
-% PARAMETERS
+% PARAMETERS (IMPORTANT !)
 % ==============================================================
         
 % The ASIO device number in the audio sytem
@@ -123,12 +123,14 @@ device = 0;
 % The number of samples in the buffer of the sound card
 % (delay * f_s = latency time)
 % It IS necessary that you compute this value BEFORE any measurement
-% executing ./tests/get_latency.m in MATLAB like this :
+% executing ./tools/get_latency.m in MATLAB like this :
 % >> get_latency(DEVICE, N)
 % where DEVICE is the device number (see above) and N the number of 
 % successive measurements
 % If this value is wrong, the phasis results might be also wrong...
-delay = 587;
+% BE CAREFUL : your ASIO card MUST be ALONE on its IRQ (see Windows system
+% settings)
+latency = 1424;
 
 
 % ==============================================================
@@ -184,7 +186,7 @@ set(handles.voices_in,'String','1|1 2|1 2 3|1 2 3 4');
 set(handles.voices_out,'String','1|1 2|1 2 3|1 2 3 4');
 
 set(handles.in_on_off,'UserData',device);
-set(handles.save_button,'UserData',delay);
+set(handles.save_button,'UserData',latency);
 
 % ==============================================================
 % TOOLS
@@ -529,7 +531,7 @@ function mes_type_CreateFcn(hObject, eventdata, handles)
 
 function mes_on_Callback(hObject, eventdata, handles, device)
     device = get(handles.in_on_off,'UserData');
-    delay = get(handles.save_button,'UserData');
+    latency = get(handles.save_button,'UserData');
     nfft = 16384;
     f_min = str2double(get(handles.f_gen_min,'String'));
     f_max = str2double(get(handles.f_gen_max,'String'));
@@ -569,7 +571,7 @@ function mes_on_Callback(hObject, eventdata, handles, device)
     sig_exc = sig_exc.*mask;
     
     % Synchronizing
-    zero = zeros(1,delay);
+    zero = zeros(1,latency);
     % Zeros are added before and removed after
     sig_exc_z = [sig_exc zero];
     len_sig_exc = length(sig_exc);
@@ -591,7 +593,7 @@ function mes_on_Callback(hObject, eventdata, handles, device)
     len_sig_mes = length(sig_mes);
     size_sig_mes = size(sig_mes);
     n_col_sig_mes = size_sig_mes(2);
-    sig_mes = sig_mes(delay+1:len_sig_mes,:);
+    sig_mes = sig_mes(latency+1:len_sig_mes,:);
     len_sig_mes = length(sig_mes);
     sig_exc = sig_exc';
     f = logspace(log10(f0), log10(f3), len_sig_mes)';
