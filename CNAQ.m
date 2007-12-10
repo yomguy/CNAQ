@@ -112,25 +112,8 @@ varargout{1} = handles.output;
 % ==============================================================
 
 cnaq_version = '0.1';
-        
-% ==============================================================
-% PARAMETERS (IMPORTANT !)
-% ==============================================================
-        
-% The ASIO device number in the audio sytem
-device = 0;  
 
-% The number of samples in the buffer of the sound card
-% (delay * f_s = latency time)
-% It IS necessary that you compute this value BEFORE any measurement
-% executing ./tools/get_latency.m in MATLAB like this :
-% >> get_latency(DEVICE, N)
-% where DEVICE is the device number (see above) and N the number of 
-% successive measurements
-% If this value is wrong, the phasis results might be also wrong...
-% BE CAREFUL : your ASIO card MUST be ALONE on its IRQ (see Windows system
-% settings)
-latency = 1424;
+% ==============================================================
 
 
 % ==============================================================
@@ -138,13 +121,16 @@ latency = 1424;
 % ==============================================================
 
 root_dir = pwd; % The directory where CNAQ is installed
-%cnaq_path = pwd;
 cnaq_path = root_dir;
+config_path = [cnaq_path '\config\'];
 tools_path = [cnaq_path '\tools\'];
 pa_path = [cnaq_path '\pa_wavplay\'];
 path(path, cnaq_path);
 path(path, tools_path);
 path(path, pa_path);
+path(path, config_path);
+
+[device, latency] = ASIO();
 home_dir = uigetdir(root_dir, 'Choisissez votre dossier de travail');
 
 % Get/Set ID
