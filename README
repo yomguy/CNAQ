@@ -1,7 +1,7 @@
 # README
 # ======
 
-CNAQ : a Matlab acquisition tool for computing transfert function over ASIO cards
+CNAQ : a Matlab acquisition tool for computing transfert function over audio cards
 
 
 # 1. Introduction
@@ -21,7 +21,7 @@ Fonctionnalités principales :
 # 2. Installation
 # ===============
 
-see INSTALL
+Uncompress the zip or the tarball in a given directory. 
 
 
 # 3. License
@@ -35,7 +35,10 @@ are also available at http://svn.parisson.org/cnaq/CnacqLicense
 # 4. Usage
 # =========
 
-Just open CNAQ.m in Matlab and run it...
+Before using CNAQ, you have to read and edit the ASIO config file (config/ASIO.m).
+The latency value can to be computed with the get_latency function (tools/get_latency.m).
+
+When configuration is done, simply open CNAQ.m in Matlab and run it (F5)...
 
  
 # 5. Authors
@@ -48,7 +51,7 @@ Manuel Melon <melon@cnam.fr>
 # 6. Aknowledgements
 # ==================
 
-Manuel Melon, Andrew Gadenko, Philippe Herzog 
+Philippe Herzog, Andrew Gadenko.
 
 
 # 7. Contact / Infos
