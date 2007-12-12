@@ -1,4 +1,4 @@
-function [mfv,ecart] = get_latency(device, n)
+function [delay, mfv,ecart] = get_latency(device, n)
 % this function allows measuring the latency of the playrecord process
 % where :
 % 'device' is the integer number of the audio card address from the ASIO
@@ -7,8 +7,7 @@ function [mfv,ecart] = get_latency(device, n)
 % mfv: most found delay
 % ecart: standard deviation on delay
 
-    if nargin < 1, n = 10; end
-
+    %if nargin < 1, n = 10; end
     %signal generation
     f_min=20;
     f_max=20000;
@@ -23,10 +22,10 @@ function [mfv,ecart] = get_latency(device, n)
         inputbuffer = pa_wavplayrecord(sig',device,[44100],0,[1],[1],device,['asio']);
         Co=xcorr(inputbuffer',sig');
         [Y(it),I(it)] = max(Co);
-        delai(it)=I(it)-len_sig;
+        delay(it)=I(it)-len_sig;
 
     end
-
-    mfv=mode(delai);
-    ecart=std(delai);
+    
+    mfv = mode(delay)
+    ecart = std(delay)
 
