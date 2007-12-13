@@ -498,10 +498,12 @@ function gen_on_off_Callback(hObject, eventdata, handles)
 %      %delete(ao);
 
     % PA way but can't work with monitor !...
-    % pa_wavplay(sig_out',f_s,0,'asio');
-
+    %pa_wavplay(sig_out',f_s,0,'asio');
+    
     % Winsoud way...
     sound(sig_out',f_s);
+    pause(0.1);
+    
 
 
 %============================================
@@ -516,9 +518,13 @@ function mes_type_CreateFcn(hObject, eventdata, handles)
     end
 
 function mes_on_Callback(hObject, eventdata, handles, device)
+%     [device, latency] = ASIO();
+%     set(handles.in_on_off,'UserData',device);
+%     set(handles.save_button,'UserData',latency);
+    pause(0.2);
     device = get(handles.in_on_off,'UserData');
     latency = get(handles.save_button,'UserData');
-    nfft = 16384;
+    nfft = 32768;
     f_min = str2double(get(handles.f_gen_min,'String'));
     f_max = str2double(get(handles.f_gen_max,'String'));
     f_s = get_fs(handles);
@@ -576,6 +582,7 @@ function mes_on_Callback(hObject, eventdata, handles, device)
     %                       [recdevice], [devicetype])
     
     % Resynchro
+    pause(0.1);
     len_sig_mes = length(sig_mes);
     size_sig_mes = size(sig_mes);
     n_col_sig_mes = size_sig_mes(2);
