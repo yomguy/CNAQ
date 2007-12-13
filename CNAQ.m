@@ -130,7 +130,7 @@ path(path, tools_path);
 path(path, pa_path);
 path(path, config_path);
 
-[device, latency] = ASIO();
+[device, latency] = asio();
 home_dir = uigetdir(root_dir, 'Choisissez votre dossier de travail');
 
 % Get/Set ID

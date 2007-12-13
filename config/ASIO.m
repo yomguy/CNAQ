@@ -4,7 +4,7 @@
 function [device, latency] = ASIO()
 
 % The ASIO device number in the audio sytem
-device = 0;  
+device = 1;  
 
 % The number of samples in the buffer of the sound card
 % (delay * f_s = latency time)
@@ -16,4 +16,4 @@ device = 0;
 % If this value is wrong, the phasis results might be also wrong...
 % BE CAREFUL : your ASIO card MUST be ALONE on its IRQ (see Windows system
 % settings)
-latency = 1424;
+latency = 587;

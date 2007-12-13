@@ -14,7 +14,7 @@ function [delay, mfv,ecart] = get_latency(device, n)
     lt=5;  
     t=0:1/44100:lt;
     sig=0.5*chirp(t,f_min,lt,f_max,'logarithmic');
-    len_sig = length(sig)
+    len_sig = length(sig);
 
     %playrecord signal
     for it = 1:n
@@ -26,6 +26,6 @@ function [delay, mfv,ecart] = get_latency(device, n)
 
     end
     
-    mfv = mode(delay)
-    ecart = std(delay)
+    mfv = mode(delay);
+    ecart = std(delay);
 
