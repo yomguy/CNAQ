@@ -55,9 +55,9 @@
 
 \section{Introduction}
 
-CNAQ est un logiciel dédié à la mesure de fonctions de transfert des systèmes électriques ou électrodynamiques. Ecrit en langage Matlab, il permet d'utiliser une carte d'acquisition audio compatible avec la norme ASIO pour générer un signal de type sinus glissant (<< sweep >> ou << chirp >> en anglais), de quantifier la réponse temporelle du système puis d'en déterminer sa réponse fréquentielle. Ce logiciel est développé dans le cadre de la rénovation des modules de travaux pratiques d'acoustique dispensés au CNAM de Paris.
+CNAQ est un logiciel dédié à la mesure de fonctions de transfert des systèmes électriques ou électrodynamiques. Ecrit en langage Matlab, il permet d'utiliser une carte d'acquisition audio compatible avec la norme ASIO pour générer un signal de type sinus glissant (<< sweep >> ou << chirp >> en anglais), de quantifier la réponse temporelle du système puis d'en déterminer la fonction de transfert. Ce logiciel est développé dans le cadre de la rénovation des modules de travaux pratiques d'acoustique dispensés au CNAM de Paris.\\
 
-La structure d'analyse de CNAQ utilise la méthode d'Angelo Farina \cite{farina} qui, appliquée dans le domaine numérique, permet d'obtenir des réponses avec un grand nombre d'échantillons, même à très basse fréquence, tout en suivant les harmoniques créés au cours du glissement en fréquence. Le calcul est en effet basé sur un produit de convolution dont la transformée de Fourier comporte le même nombre de points que le nombre d'échantillons dans le signal mesuré. Outre le fait que cette technique offre une souplesse d'utilisation supplémentaire par rapport aux autres méthodes, MLS par exemple, elle fournit des résolutions fréquentielles très élevés, notamment aux basses fréquences. Elle rend également aisée et rapide la déduction des taux de distortions du système mesuré \cite{muller}.
+A l'avenir (version >= 0.2), la structure d'analyse de CNAQ utilisera la méthode d'Angelo Farina \cite{farina} qui, appliquée dans le domaine numérique, permet d'obtenir des réponses avec un grand nombre d'échantillons, même aux très basses fréquences, tout en suivant les harmoniques créés au cours du glissement en fréquence. Le calcul est en effet basé sur un produit de convolution dont la transformée de Fourier comporte le même nombre de points que le nombre d'échantillons dans le signal mesuré. Outre le fait que cette technique offre une souplesse d'utilisation supplémentaire par rapport aux autres méthodes, MLS par exemple, elle fournit des résolutions fréquentielles très élevés, notamment aux basses fréquences. Elle rend également aisée et rapide la déduction des taux de distortions du système mesuré \cite{muller}.\\
 
 Le logiciel CNAQ offre ainsi une interface interactive pour mesurer et calculer les fonctions de transfert directement dans Matlab. Il s'inspire Il s'inspire entre autres de l'excellent logiciel libre QLoud \cite{qloud} fonctionnant sur système GNU/Linux.
 
@@ -94,11 +94,11 @@ termes.
 
 \section{Téléchargement}
 
-CNAQ est librement téléchargeable à l'adresse suivante : \url{http://svn.parisson.org/cnaq/} où il est conseillé de choisir la dernière version au format tar.gz.
+CNAQ est librement téléchargeable à l'adresse suivante : \url{http://svn.parisson.org/cnaq/} où il est conseillé de choisir la dernière version au format \verb|tar.gz| ou \verb|.zip|.
 
 Pour obtenir la version de développement, il est nécessaire d'utiliser le logiciel Subversion\footnote{\url{http://subversion.tigris.org/} pour Linux, ou \url{http://tortoisesvn.tigris.org/} pour Windows} et d'appliquer la commande :
 \begin{verbatim}
- svn co http://svn.parisson.org/svn/CNAQ/trunk CNAQ
+    svn co http://svn.parisson.org/svn/CNAQ/trunk CNAQ
 \end{verbatim}
 
 
@@ -106,14 +106,59 @@ Pour obtenir la version de développement, il est nécessaire d'utiliser le logici
 
 \begin{itemize}
 \item Microsoft Windows\circledR~~(>= 2000).
-\item MATLAB\circledR~~(>= 6.0).
+\item MATLAB\circledR~~(>= 2007a).
 \item Une carte audio compatible ASIO et ses pilotes ASIO installés.\\
 \end{itemize}
 
 CNAQ utilise deux principes pour converser avec la carte d'acquisition. D'une part, les fonctions d'émission du générateur propres à Matlab sur la base du driver \textit{Winsound} permettent d'utiliser le monitoring graphique en parallèle de l'émission. D'autre part, les librairies \textit{pa-wavplay} \cite{pawavplay} utilisant la norme ASIO facilitent le calcul des fonctions de transfert grâce à une taille de tampon mémoire mieux gérée.
 
 
-\section{Lancement}\label{lancement}
+\section{Premiers réglages}\label{lancement}
+
+\subsection{Latence}
+
+Afin d'obtenir un signal entrant synchronisé avec le signal sortant, il est nécessaire de mesurer le temps de latence total du système audio hors charges.
+
+\begin{enumerate}
+\item Connecter la sortie n°1 de la carte sur l'entrée n°1 de la carte audio compatible ASIO.
+\item Démarrer MATLAB et aller dans le dossier \verb|tools| du répertoire où est installé CNAQ. Par exemple :
+
+\begin{verbatim}
+    >> cd('C:\CNAQ\tools')
+\end{verbatim}
+
+\item Définir le numéro du périphérique ASIO. Par exemple :
+
+\begin{verbatim}
+    >> device = 0
+\end{verbatim}
+
+\item Définir le nombre de boucles de mesure. Par exemple :
+
+\begin{verbatim}
+    >> N = 0
+\end{verbatim}
+
+\item Appliquer la fonction de calcul de latence. Par exemple :
+
+\begin{verbatim}
+    >> get_latency(device, N)
+\end{verbatim}
+
+Si une erreur est renvoyée, le numéro du périphérique ASIO est sûrement faux. Essayer avec \verb|device=1| ou \verb|device=2|, etc...
+
+\item Editer le fichier de configuration :
+
+\begin{verbatim}
+    >> edit C:\CNAQ\config\asio.m
+\end{verbatim}
+
+et remplacer les valeurs \verb|device| et \verb|latency| par celles déterminées. Sauver ce fichier.
+
+\end{enumerate}
+
+
+\subsection{Exécution}
 
 %Dans cette documentation, nous considérerons que le dossier décompressé de l'application se trouve à l'addresse \texttt{C:\CNAQ}. Si l'application a été décompréssée dans un autre dossier, modifier les exemples suivants en conséquence.
 
@@ -184,7 +229,7 @@ Voici une chronologie des étapes à suivre pour la mesure d'une fonction de trans
 Outre les résultats bruts affichés après chaque mesure, il est possible d'analyser plus profondément les résultats grâce au langage Matlab. Il suffit de rappeler le fichier sauvegardé de type MAT depuis le dossier de travail à l'aide de la fonction \textbf{load}. Par exemple, si le fichier se nomme \verb|Durand_89.mat| et se trouve dans le dossier \verb|D:\Durand|, exécuter :
 
 \begin{verbatim}
-load(D:\Durand\Durand_89.mat)
+    load(D:\Durand\Durand_89.mat);
 \end{verbatim}
 
 Toutes les variables ainsi que les signaux temporels mesurés sont alors disponibles en mémoire pour être traîtés (voir la fenêtre \textbf{Workspace}). Voici une liste non-exhaustive des paramètres et des signaux récupérés :
@@ -224,7 +269,7 @@ Deux commandes fondamentales permettent de trouver/retrouver une commande Matlab
 \end{itemize}
 
 \subsection{Octave}
-Lorsqu'aucune licence Matlab n'est disponible (chez soi par exemple), il est possible d'utiliser le logiciel libre et gratuit \textbf{Octave} \cite{octave} pour l'analyse des mesures. Ce logiciel, bien que moins complet que Matlab, dispose des mêmes fonctions principales que lui et surtout du même langage ! On peut donc - après avoir téléchargé, installé et démarré Octave - récupérer les mesures à partir du fichier de sauvegarde .mat et exécuter directement les commandes vues aux paragraphes \ref{depouillement_1} et \ref{depouillement_2}.\\
+Lorsqu'aucune licence Matlab n'est disponible (chez soi par exemple), il est possible d'utiliser le logiciel libre et gratuit \textbf{Octave} \cite{octave} pour l'analyse des mesures. Ce logiciel, bien que moins complet que Matlab, dispose des mêmes fonctions principales que lui et surtout du même langage ! On peut donc - après avoir téléchargé, installé et démarré Octave - récupérer les mesures à partir des fichiers de sauvegarde de type \verb|.mat| et exécuter directement les commandes vues aux paragraphes \ref{depouillement_1} et \ref{depouillement_2}.\\
 
 \textbf{Attention :} Octave ne permettra pas de faire fonctionner l'interface graphique CNAQ, uniquement les routines de post-traitement.
 
