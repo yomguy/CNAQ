@@ -294,7 +294,7 @@ function get_home_dir_Callback(hObject, eventdata, handles)
     
 function in_on_off_Callback(hObject, eventdata, handles)
     device = get(handles.in_on_off,'UserData');
-    buffer = 4096;
+    buffer = 8192;
     window = hanning(buffer);
     f_s = get_fs(handles);
     time = buffer/f_s;
@@ -303,7 +303,8 @@ function in_on_off_Callback(hObject, eventdata, handles)
     f_min = str2double(get(handles.f_gen_min,'String'));
     f_max = str2double(get(handles.f_gen_max,'String'));
     freq = 2*(f_max-f_min)/buffer;
-    f = [f_min:freq:f_max-freq];
+    f = [0:f_s/buffer:f_s/2];
+    f = f(1:length(f)-1);
     voices_in = get_voices_in(handles);
     voice_first = voices_in(1);
     voice_last =  voices_in(length(voices_in));
