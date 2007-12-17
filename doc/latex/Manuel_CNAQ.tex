@@ -1,6 +1,7 @@
-\documentclass[pdftex,11pt,a4paper,twoside]{article}
+\documentclass[11pt,a4paper,twoside]{article}
 
 \usepackage{article_profile}
+%\input{article_profile.tex}
 %\graphicspath{{/figures}}
 
 %==================================================================
@@ -57,7 +58,7 @@
 
 CNAQ est un logiciel dédié à la mesure de fonctions de transfert des systèmes électriques ou électrodynamiques. Ecrit en langage Matlab, il permet d'utiliser une carte d'acquisition audio compatible avec la norme ASIO pour générer un signal de type sinus glissant (<< sweep >> ou << chirp >> en anglais), de quantifier la réponse temporelle du système puis d'en déterminer la fonction de transfert. Ce logiciel est développé dans le cadre de la rénovation des modules de travaux pratiques d'acoustique dispensés au CNAM de Paris.\\
 
-A l'avenir (version >= 0.2), la structure d'analyse de CNAQ utilisera la méthode d'Angelo Farina \cite{farina} qui, appliquée dans le domaine numérique, permet d'obtenir des réponses avec un grand nombre d'échantillons, même aux très basses fréquences, tout en suivant les harmoniques créés au cours du glissement en fréquence. Le calcul est en effet basé sur un produit de convolution dont la transformée de Fourier comporte le même nombre de points que le nombre d'échantillons dans le signal mesuré. Outre le fait que cette technique offre une souplesse d'utilisation supplémentaire par rapport aux autres méthodes, MLS par exemple, elle fournit des résolutions fréquentielles très élevés, notamment aux basses fréquences. Elle rend également aisée et rapide la déduction des taux de distortions du système mesuré \cite{muller}.\\
+A l'avenir (version >= 0.2), la structure d'analyse de CNAQ utilisera la méthode d'Angelo Farina \cite{farina} qui, appliquée dans le domaine numérique, permet d'obtenir des réponses avec un grand nombre d'échantillons, même aux très basses fréquences, tout en suivant les harmoniques créés au cours du glissement en fréquence. Le calcul est en effet basé sur un produit de convolution dont la transformée de Fourier comporte le même nombre de points que le nombre d'échantillons dans le signal mesuré. Outre le fait que cette technique offre une souplesse d'utilisation supplémentaire par rapport aux autres méthodes, MLS par exemple, elle fournit des résolutions fréquentielles très élevés, notamment aux basses fréquences. Elle rend également aisée et rapide la déduction des taux de distortions du système mesuré \cite{muller}. Un test (\verb|tests\farina.m|) permet de comparer la méthode Farina à celle du rapport des transformées de Fourier. Il apparaît que la première donne de meilleurs résultats dans le domaine temporel pour évaluer la réponse impulsionnelle alors que la deuxième semble optimum pour la détermination de la réponse fréquentielle.\\
 
 Le logiciel CNAQ offre ainsi une interface interactive pour mesurer et calculer les fonctions de transfert directement dans Matlab. Il s'inspire Il s'inspire entre autres de l'excellent logiciel libre QLoud \cite{qloud} fonctionnant sur système GNU/Linux.
 
@@ -167,10 +168,10 @@ et remplacer les valeurs \verb|device| et \verb|latency| par celles déterminées.
  \item Exécuter le fichier CNAQ.m depuis le dossier décompressé de l'application CNAQ, par exemple \verb|C:\CNAQ|. Avant de démarrer, l'application demande de fournir un dossier de travail. Ce dossier peut être vide mais doit exister (le créer dans l'explorateur si nécessaire avec un nom explicite) : il intégrera l'ensemble des fichiers sauvegardés pendant les mesures. Une fenêtre semblable à la figure \ref{cnaq_default} doit alors s'afficher.
 
     \begin{figure}[htbp]
+     \label{cnaq_default}
       \centering
       \includegraphics[width=12cm]{img/cnaq_02}
       \caption{Fenêtre de démarrage par défaut du logiciel CNAQ.}
-      \label{cnaq_default}
     \end{figure}
 
  \item Remplir les champs << Nom d'utilisateur >> et << Commentaires >>.
