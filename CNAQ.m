@@ -34,7 +34,7 @@ function varargout = CNAQ(varargin)
 
 %  Author: Guillaume Pellerin <guillaume.pellerin@cnam.fr>
 
-% Last Modified by GUIDE v2.5 07-Nov-2007 18:26:57
+% Last Modified by GUIDE v2.5 12-Jan-2008 11:35:34
 
 %      CNAQ, by itself, creates a new CNAQ or raises the existing
 %      singleton*.
@@ -208,6 +208,16 @@ function f_s = get_fs(handles)
     elseif fs_ind == 3
         f_s = 96000;
     end
+    
+function set_fs(handles, f_s)
+    if f_s == 44100
+        fs_ind = 1;
+    elseif f_s == 48000
+        fs_ind = 2;
+    elseif f_s == 96000
+        fs_ind = 3;
+    end
+    set(handles.f_s,'Value',fs_ind);
 
 function voices_out = get_voices_out(handles)
     vo_ind = get(handles.voices_out,'Value');
@@ -241,7 +251,14 @@ function nbits = get_nbits(handles)
         nbits = 24;
     end
 
-
+function set_nbits(handles, nbits)
+    if nbits == 16
+        nb_ind = 1;
+    elseif nbits == 24
+        nb_ind = 2;
+    end
+    set(handles.nbits,'Value', nb_ind);
+    
 %============================================
 % DONNEES
 %============================================
@@ -596,32 +613,10 @@ function mes_on_Callback(hObject, eventdata, handles, device)
     set(handles.ID,'UserData',sig_mes);
     set(handles.id_title,'UserData',sig_exc);
     set(handles.mes_on,'UserData',f);
-    
-    % Get infos
-    username = get(handles.username,'String');
-    comment = get(handles.comment,'String');
-    id = get(handles.ID,'String');
-    
-    % Compute excitation spectrum
-    [rep_imp_exc, spec_exc] = fonc_trans(f, sig_exc, sig_exc);
-    len_spec_exc = length(spec_exc);
-    spec_exc = spec_exc(1:len_spec_exc/2);
-    
-    % Compute all Ris and specs
-    for i=1:n_col_sig_mes
-        voice = num2str(i);
-        [rep_imp_mes, spec_mes] = fonc_trans(f, sig_exc, sig_mes(:,i));
-        len_spec_mes = length(spec_mes);    
-        spec_mes = spec_mes(1:len_spec_mes/2);
-        % Plot results
-        f_lin = [0:f_s/len_spec_mes:f_s/2];
-        f_lin = f_lin(1:length(f_lin)-1);
-        plot_mes(t, f_lin, f_s, f_min, f_max, sig_exc, sig_mes(:,i), rep_imp_mes, spec_mes, spec_exc, id, voice, username, comment, i);
-    end
-    
-    set(handles.close_button,'UserData',f_lin');
     set(handles.plot,'UserData',t);
-
+    
+    % Plot
+    plot_Callback(hObject, eventdata, handles)
     
 % Close all figures
 % --- Executes on button press in close_button.
@@ -631,7 +626,7 @@ function close_button_Callback(hObject, eventdata, handles)
 % handles    structure with handles and user data (see GUIDATA)
      close all;
         
-
+     
 % --- Executes on button press in plot.
 function plot_Callback(hObject, eventdata, handles)
 % hObject    handle to plot (see GCBO)
@@ -672,6 +667,9 @@ function plot_Callback(hObject, eventdata, handles)
         plot_mes(t, f_lin, f_s, f_min, f_max, sig_exc, sig_mes(:,i), rep_imp_mes, spec_mes, spec_exc, id, voice, username, comment, i);
     end
 
+    set(handles.close_button,'UserData',f_lin');
+    set(handles.plot,'UserData',t);
+    
     
 % SAVE all data in a mat file 
 function save_button_Callback(hObject, eventdata, handles)  
@@ -686,6 +684,8 @@ function save_button_Callback(hObject, eventdata, handles)
     f_lin = get(handles.close_button,'UserData');
     f_s = get_fs(handles);
     nbits = get_nbits(handles);
+    f = get(handles.mes_on,'UserData');
+    t = get(handles.plot,'UserData');
     f_min = str2double(get(handles.f_gen_min,'String'));
     f_max = str2double(get(handles.f_gen_max,'String'));
     time = get(handles.time_gen,'Value');
@@ -706,4 +706,37 @@ function save_button_Callback(hObject, eventdata, handles)
     % Increment ID
     increment_id(handles);
     
-   
+% --- Executes on button press in load.
+function load_Callback(hObject, eventdata, handless)
+% hObject    handle to load (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+    [filename, pathname, filterindex] = uigetfile('*.mat', 'Pick a saved MAT file');
+    load([pathname filename]);
+    
+    % Set data
+    set(handless.username,'String',username);
+    set(handless.home_dir_box,'String',home_dir);
+    set(handless.comment,'String',comment);
+    set(handless.id_title,'UserData',sig_exc);
+    set(handless.ID,'UserData',sig_mes);
+    set(handless.mes_on,'UserData',f_log);
+    set(handless.close_button,'UserData',f_lin);
+    set_fs(handless, f_s);
+    set_nbits(handless, nbits);
+    set(handless.mes_on,'UserData', f);
+    set(handless.plot,'UserData', t);
+    set(handless.f_gen_min,'String', num2str(f_min));
+    set(handless.f_gen_max,'String', num2str(f_max));
+    set(handless.f_gen,'Value', f);
+    set(handles.freq_value,'String',num2str(f));
+    set(handless.time_gen,'Value', time);
+    set(handles.time_value,'String',num2str(time));
+    set(handless.gain_in,'Value', gain_in);
+    set(handless.gain_out,'Value', gain_out);
+    set(handless.gain_in_value,'String',num2str(gain_in));
+    set(handless.gain_out_value,'String',num2str(gain_out));
+    
+    
+    
