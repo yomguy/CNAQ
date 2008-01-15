@@ -122,9 +122,9 @@ cnaq_version = '0.1';
 
 root_dir = pwd; % The directory where CNAQ is installed
 cnaq_path = root_dir;
-config_path = [cnaq_path '\config\'];
-tools_path = [cnaq_path '\tools\'];
-pa_path = [cnaq_path '\pa_wavplay\'];
+config_path = [cnaq_path filesep 'config' filesep];
+tools_path = [cnaq_path filesep 'tools' filesep];
+pa_path = [cnaq_path filesep 'pa_wavplay' filesep];
 path(path, cnaq_path);
 path(path, tools_path);
 path(path, pa_path);
