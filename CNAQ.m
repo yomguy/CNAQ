@@ -111,7 +111,7 @@ varargout{1} = handles.output;
 % uiwait(handles.figure1);
 % ==============================================================
 
-cnaq_version = '0.1';
+cnaq_version = '0.2';
 
 % ==============================================================
 
@@ -130,7 +130,10 @@ path(path, tools_path);
 path(path, pa_path);
 path(path, config_path);
 
+% Get audio device parameters
 [device, latency] = asio();
+
+% Get home directory
 home_dir = uigetdir(root_dir, 'Choisissez votre dossier de travail');
 
 % Get/Set ID
@@ -140,8 +143,7 @@ set(handles.home_dir_box,'String',home_dir);
 set(handles.info1_text,'String',['CNAQ v' cnaq_version ' - Copyright (C) 2007']);
 set(handles.info2_text,'String','Guillaume Pellerin, Manuel Melon (CNAM Paris)  http://svn.parisson.org/cnaq/');
 
-%set(handles.home_dir_box,'C:\CNAQ\');
-
+% Set default values
 set(handles.f_gen_min,'String','20');
 set(handles.f_gen_max,'String','20000');
 set(handles.f_gen,'Value',1000);
@@ -162,7 +164,7 @@ set(handles.time_gen,'Max',20);
 set(handles.time_value,'String','5')
 
 set(handles.nbits,'String','16|24'); 
-set(handles.f_s,'String','44100|48000|96000');
+set(handles.f_s,'String','44100|48000|88200|96000|192000');
 
 %set(handles.out_on_off,'Value',0);
 set(handles.in_on_off,'Value',0);
@@ -260,7 +262,7 @@ function set_nbits(handles, nbits)
     set(handles.nbits,'Value', nb_ind);
     
 %============================================
-% DONNEES
+% DATA
 %============================================
 
 function username_Callback(hObject, eventdata, handles)
@@ -352,7 +354,7 @@ function in_on_off_Callback(hObject, eventdata, handles)
 
     
 %============================================
-% VOIES
+% VOICES
 %============================================
 
 function gain_in_Callback(hObject, eventdata, handles)
@@ -386,7 +388,7 @@ function voices_out_CreateFcn(hObject, eventdata, handles)
     end
     
 %============================================
-% GENERATEUR
+% GENERATOR
 %============================================
 
 function sig_type_Callback(hObject, eventdata, handles)
@@ -501,7 +503,7 @@ function gen_on_off_Callback(hObject, eventdata, handles)
     for i=1:length(voices_out)
         sig_out(:,i) = sig';
     end
-    
+
     % Matlab way (needs Data Acquisition Toolbox)
 %      ao = analogoutput('winsound', 0);
 %      addchannel(ao, voices_out);
@@ -518,14 +520,14 @@ function gen_on_off_Callback(hObject, eventdata, handles)
     % PA way but can't work with monitor !...
     %pa_wavplay(sig_out',f_s,0,'asio');
     
-    % Winsoud way...
+    % Winsoud way to get the scope running...
     sound(sig_out',f_s);
     pause(0.1);
     
 
 
 %============================================
-% MESURE
+% MEASUREMENT
 %============================================
 
 function mes_type_Callback(hObject, eventdata, handles)
