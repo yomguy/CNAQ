@@ -134,7 +134,7 @@ path(path, config_path);
 [device, latency] = asio();
 
 % Get home directory
-home_dir = uigetdir(root_dir, 'Choisissez votre dossier de travail');
+home_dir = uigetdir(root_dir, 'Choose your home directory');
 
 % Get/Set ID
 id = get_id(handles);
@@ -732,9 +732,9 @@ function load_Callback(hObject, eventdata, handless)
     set(handless.f_gen_min,'String', num2str(f_min));
     set(handless.f_gen_max,'String', num2str(f_max));
     set(handless.f_gen,'Value', f);
-    set(handles.freq_value,'String',num2str(f));
+    set(handless.freq_value,'String',num2str(f));
     set(handless.time_gen,'Value', time);
-    set(handles.time_value,'String',num2str(time));
+    set(handless.time_value,'String',num2str(time));
     set(handless.gain_in,'Value', gain_in);
     set(handless.gain_out,'Value', gain_out);
     set(handless.gain_in_value,'String',num2str(gain_in));
