@@ -141,7 +141,7 @@ id = get_id(handles);
 set(handles.ID,'String',id);
 set(handles.home_dir_box,'String',home_dir);
 set(handles.info1_text,'String',['CNAQ v' cnaq_version ' - Copyright (C) 2007-2008']);
-set(handles.info2_text,'String','Guillaume Pellerin, Manuel Melon (CNAM Paris)  http://svn.parisson.org/cnaq/');
+set(handles.info2_text,'String','Guillaume Pellerin, Manuel Melon  CNAM Paris   http://svn.parisson.org/cnaq/');
 
 % Set default values
 set(handles.f_gen_min,'String','20');
