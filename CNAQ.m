@@ -124,7 +124,7 @@ root_dir = pwd; % The directory where CNAQ is installed
 cnaq_path = root_dir;
 config_path = [cnaq_path filesep 'config' filesep];
 tools_path = [cnaq_path filesep 'tools' filesep];
-pa_path = [cnaq_path filesep 'pa_wavplay' filesep];
+pa_path = [cnaq_path filesep 'lib' filesep 'pa_wavplay' filesep];
 path(path, cnaq_path);
 path(path, tools_path);
 path(path, pa_path);
@@ -134,13 +134,13 @@ path(path, config_path);
 [device, latency] = asio();
 
 % Get home directory
-home_dir = uigetdir(root_dir, 'Choose your home directory');
+home_dir = uigetdir(root_dir, 'Choose your workspace');
 
 % Get/Set ID
 id = get_id(handles);
 set(handles.ID,'String',id);
 set(handles.home_dir_box,'String',home_dir);
-set(handles.info1_text,'String',['CNAQ v' cnaq_version ' - Copyright (C) 2007']);
+set(handles.info1_text,'String',['CNAQ v' cnaq_version ' - Copyright (C) 2007-2008']);
 set(handles.info2_text,'String','Guillaume Pellerin, Manuel Melon (CNAM Paris)  http://svn.parisson.org/cnaq/');
 
 % Set default values
@@ -169,7 +169,7 @@ set(handles.f_s,'String','44100|48000|88200|96000|192000');
 %set(handles.out_on_off,'Value',0);
 set(handles.in_on_off,'Value',0);
 set(handles.gen_on_off,'Value',0);
-set(handles.sig_type,'String','Sinus|Chirp');
+set(handles.sig_type,'String','Sinus|Chirp|White noise|Pink noise');
 set(handles.voices_in,'String','1|1 2|1 2 3|1 2 3 4');
 set(handles.voices_out,'String','1|1 2|1 2 3|1 2 3 4');
 
@@ -216,8 +216,12 @@ function set_fs(handles, f_s)
         fs_ind = 1;
     elseif f_s == 48000
         fs_ind = 2;
-    elseif f_s == 96000
+    elseif f_s == 88200
         fs_ind = 3;
+    elseif f_s == 96000
+        fs_ind = 4;
+    elseif f_s == 192000
+        fs_ind = 5;
     end
     set(handles.f_s,'Value',fs_ind);
 
@@ -490,6 +494,7 @@ function gen_on_off_Callback(hObject, eventdata, handles)
     gain_out = get(handles.gain_out,'Value');
     gain_out = 10^(gain_out/20);
     t = [0:1/f_s:time];
+    n_t = length(t);
     
     if sig_type == 1
         % SINUS
@@ -497,6 +502,12 @@ function gen_on_off_Callback(hObject, eventdata, handles)
     elseif sig_type == 2
         % CHIRP
         sig = gain_out*chirp(t,f_min,time,f_max,'logarithmic');
+    elseif sig_type == 3
+        % WHITE NOISE
+        sig = gain_out*white_noise(n_t);
+    elseif sig_type == 4
+        % PINK NOISE
+        sig = gain_out*pink_noise(n_t);
     end
   
     sig_out = [];
@@ -707,7 +718,8 @@ function save_button_Callback(hObject, eventdata, handles)
     
     % Increment ID
     increment_id(handles);
-    
+
+
 % --- Executes on button press in load.
 function load_Callback(hObject, eventdata, handless)
 % hObject    handle to load (see GCBO)
