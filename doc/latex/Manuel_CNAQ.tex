@@ -15,7 +15,7 @@
 	\vspace{4mm}
     \rule{17cm}{1mm}\\
     \large{\today\\}
-    \large{Version 0.1}\\
+    \large{Version 0.2}\\
 	\vspace{3cm}
     \end{flushright}
  	\begin{figure}[h]
@@ -58,7 +58,7 @@
 
 CNAQ est un logiciel dédié à la mesure de fonctions de transfert des systèmes électriques ou électrodynamiques. Ecrit en langage Matlab, il permet d'utiliser une carte d'acquisition audio compatible avec la norme ASIO pour générer un signal de type sinus glissant (<< sweep >> ou << chirp >> en anglais), de quantifier la réponse temporelle du système puis d'en déterminer la fonction de transfert. Ce logiciel est développé dans le cadre de la rénovation des modules de travaux pratiques d'acoustique dispensés au CNAM de Paris.\\
 
-A l'avenir (version >= 0.2), la structure d'analyse de CNAQ utilisera la méthode d'Angelo Farina \cite{farina} qui, appliquée dans le domaine numérique, permet d'obtenir des réponses avec un grand nombre d'échantillons, même aux très basses fréquences, tout en suivant les harmoniques créés au cours du glissement en fréquence. Le calcul est en effet basé sur un produit de convolution dont la transformée de Fourier comporte le même nombre de points que le nombre d'échantillons dans le signal mesuré. Outre le fait que cette technique offre une souplesse d'utilisation supplémentaire par rapport aux autres méthodes, MLS par exemple, elle fournit des résolutions fréquentielles très élevés, notamment aux basses fréquences. Elle rend également aisée et rapide la déduction des taux de distortions du système mesuré \cite{muller}. Un test (\verb|tests\farina.m|) permet de comparer la méthode Farina à celle du rapport des transformées de Fourier. Il apparaît que la première donne de meilleurs résultats dans le domaine temporel pour évaluer la réponse impulsionnelle alors que la deuxième semble optimale pour la détermination de la réponse fréquentielle.\\
+A l'avenir (version >= 0.3), la structure d'analyse de CNAQ utilisera la méthode d'Angelo Farina \cite{farina} qui, appliquée dans le domaine numérique, permet d'obtenir des réponses avec un grand nombre d'échantillons, même aux très basses fréquences, tout en suivant les harmoniques créés au cours du glissement en fréquence. Le calcul est en effet basé sur un produit de convolution dont la transformée de Fourier comporte le même nombre de points que le nombre d'échantillons dans le signal mesuré. Outre le fait que cette technique offre une souplesse d'utilisation supplémentaire par rapport aux autres méthodes, MLS par exemple, elle fournit des résolutions fréquentielles très élevés, notamment aux basses fréquences. Elle rend également aisée et rapide la déduction des taux de distortions du système mesuré \cite{muller}. Un test (\verb|tests\farina.m|) permet de comparer la méthode Farina à celle du rapport des transformées de Fourier. Il apparaît que la première donne de meilleurs résultats dans le domaine temporel pour évaluer la réponse impulsionnelle alors que la deuxième semble optimale pour la détermination de la réponse fréquentielle.\\
 
 Le logiciel CNAQ offre ainsi une interface interactive pour mesurer et calculer les fonctions de transfert directement dans Matlab. Il s'inspire Il s'inspire entre autres de l'excellent logiciel libre QLoud \cite{qloud} fonctionnant sur système GNU/Linux.
 
@@ -131,7 +131,7 @@ Afin d'obtenir un signal entrant synchronisé avec le signal sortant, il est néce
 \item Définir le numéro du périphérique ASIO. Par exemple :
 
 \begin{verbatim}
-    >> device = 0
+    >> device = 10
 \end{verbatim}
 
 \item Définir le nombre de boucles de mesure. Par exemple :
@@ -175,7 +175,7 @@ et remplacer les valeurs \verb|device| et \verb|latency| par celles déterminées.
     \end{figure}
 
  \item Remplir les champs << Nom d'utilisateur >> et << Commentaires >>.
- \item Démarrer le vu-mètre stereo : \verb|C:\CNAQ\vu-meters\meterV.exe|.
+ \item Démarrer le vu-mètre stereo : \verb|C:\CNAQ\tools\vu-meters\meterV.exe|.
 \end{enumerate}
 
 
@@ -184,25 +184,26 @@ et remplacer les valeurs \verb|device| et \verb|latency| par celles déterminées.
 L'interface graphique de CNAQ comporte 6 blocs principaux dont voici les descriptions :
 
 \begin{description}
- \item[Données :] les données générales de la prochaine mesure : le nom de groupe (à remplir), les commentaires (optionnels), le dossier de travail à choisir (bouton \textbf{Browse}), la fréquence d'échantillonnage \textbf{$F_s$} en Hz et le nombre de bits \textbf{Nbits} de la quantification.\\
+ \item[Metadata :] les données générales de la prochaine mesure : le nom de groupe (à remplir), les commentaires (optionnels), le dossier de travail à choisir (bouton \textbf{Browse}).\\
 
  \item[Infos :]	les informations de copyright et de version de l'application utilisée.\\
 
- \item[Moniteur :] les fenêtres d'affichage en temps réel des signaux entrant par la voie n°1. Au démarrage, l'affichage est désactivé. La première fenêtre est la forme d'onde temporelle du signal par blocs de 1 s et la deuxième le module de la transformée de Fourier de chaque  bloc numérisé. Cette fonction est démarrée en appuyant sur le bouton \textbf{ON/OFF} et stoppée de la même manière.\\
+ \item[Monitor :] les fenêtres d'affichage en temps réel des signaux entrant par la voie n°1. Au démarrage, l'affichage est désactivé. La première fenêtre est la forme d'onde temporelle du signal par blocs de 1 s et la deuxième le module de la transformée de Fourier de chaque  bloc numérisé. Cette fonction est démarrée en appuyant sur le bouton \textbf{ON/OFF} et stoppée de la même manière.\\
  \textbf{Remarque :} les fonctions d'affichage de Matlab imposent une priorité maximale de l'affichage de CNAQ lorsque le moniteur est enclenché. Pour pouvoir intervenir sur d'autres fenêtres dans l'environnement Windows, il est donc nécessaire de \textbf{stopper le moniteur}.\\
 
- \item[Voies :] les voies entrantes et sortantes utilisées de la carte d'acquisition et leurs gains associées dans l'intervalle $[0;1]$.\\
+ \item[Voices :] la fréquence d'échantillonnage \textbf{$F_s$} en Hz, le nombre de bits \textbf{Nbits} de la quantification ainsi que les voies entrantes et sortantes utilisées de la carte d'acquisition et leurs gains associées dans l'intervalle $[0;1]$.\\
 
- \item[Générateur : ] les fonctions permettant de générer un signal et de le jouer à travers les voies choisies.\\
-	Si le type de signal est un \textbf{sinus}, sa fréquence est déterminé par la valeur du curseur \textbf{Fréquence} et sa durée par la valeur du curseur \textbf{Durée}. Les bornes de chaque curseur sont déterminées par les valeurs indiquées dans les champs latéraux.\\
+ \item[Generator : ] les fonctions permettant de générer un signal et de le jouer à travers les voies choisies.\\
+	Si le type de signal est un \textbf{sinus}, sa fréquence est déterminé par la valeur du curseur \textbf{Frequency} et sa durée par la valeur du curseur \textbf{Time}. Les bornes de chaque curseur sont déterminées par les valeurs indiquées dans les champs latéraux.\\
 	Si le type de signal est un \textbf{chirp}, un sinus à fréquence glissante logarithmique est généré. Ses bornes sont celles du curseur de fréquence.\\
 	L'émission du signal déterminé est effectuée en cliquant sur le bouton \textbf{TRIG}. Noter qu'il est possible d'émettre un signal tout en visualisant la réponse du système étudié sur le moniteur.\\
 
- \item[Mesure :] les fonctions de mesure de fonctions de transfert selon la méthode de Farina.\\
+ \item[Measurement :] les fonctions de mesure de fonctions de transfert selon la méthode de Farina.\\
 	Les valeurs des bornes fréquentielles pour la génération du chirp ainsi que sa durée sont issues de celles du bloc Générateur.\\
 	Le bouton \textbf{TRIG} lance la mesure et affiche les résultats temporels (réponse temporelle et réponse impulsionnelle) et fréquentiels (module et phase) dans de nouvelles fenêtres pour chaque voie.\\
-	Le bouton \textbf{Sauver} sauvegarde l'ensemble des paramètres de la fenêtre, le signal émis ainsi que tous les signaux temporels mesurés dans un fichier de type MAT dans le dossier de travail. Le nom de ce fichier comporte le nom du groupe et l'\textbf{ID} de la mesure. Cette valeur s'incrémente automatiquement après chaque sauvegarde.\\
-	Le bouton \textbf{Plot last} trace la dernière mesure effectuée.
+	Le bouton \textbf{Save} sauvegarde l'ensemble des paramètres de la fenêtre, le signal émis ainsi que tous les signaux temporels mesurés dans un fichier de type MAT dans le dossier de travail. Le nom de ce fichier comporte le nom du groupe et l'\textbf{ID} de la mesure. Cette valeur s'incrémente automatiquement après chaque sauvegarde.\\
+    Le bouton \textbf{Load} charge un fichier de sauvegarde au format .MAT préalablement sauvé. On récupère alors tous les réglages de la mesure correspondante.\\
+	Le bouton \textbf{Plot} trace la dernière mesure effectuée ou chargée.
 \end{description}
 
 
@@ -220,7 +221,7 @@ Voici une chronologie des étapes à suivre pour la mesure d'une fonction de trans
  \item Régler les paramètres du générateur qui détermineront ceux de la mesure (intervalles, durée, etc...).
  \item Régler les appareils intermédiaires (amplis, filtres) en utilisant le générateur et le moniteur. Ne pas dépasser 0 dB au vu-mètre.
  \item Effectuer la mesure à l'aide du bouton \textbf{TRIG} du bloc Mesure.
- \item Sauvegarder éventuellement la mesure en cliquant sur le bouton \textbf{Sauver}.
+ \item Sauvegarder éventuellement la mesure en cliquant sur le bouton \textbf{Save}.
 \end{enumerate}
 
 
@@ -233,7 +234,7 @@ Outre les résultats bruts affichés après chaque mesure, il est possible d'analys
     load(D:\Durand\Durand_89.mat);
 \end{verbatim}
 
-Toutes les variables ainsi que les signaux temporels mesurés sont alors disponibles en mémoire pour être traîtés (voir la fenêtre \textbf{Workspace}). Voici une liste non-exhaustive des paramètres et des signaux récupérés :
+Toutes les variables ainsi que les signaux temporels mesurés sont alors disponibles en mémoire pour être traîtés (voir l'onglet \textbf{Workspace} dans la fenêtre principale de MATLAB). Voici une liste non-exhaustive des paramètres et des signaux récupérés :
 
 \begin{description}
  \item[\texttt{comment} :] le commentaire textuel associé à la mesure.
