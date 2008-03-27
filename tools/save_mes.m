@@ -26,9 +26,9 @@ function save_mes(handles)
     save(file);
     
     % Clear big data
-    set(handles.ID,'UserData',[]);
-    set(handles.id_title,'UserData',[]);
-    set(handles.mes_on,'UserData',[]);
+    % set(handles.ID,'UserData',[]);
+    % set(handles.id_title,'UserData',[]);
+    % set(handles.mes_on,'UserData',[]);
     
     % Increment ID
     increment_id(handles);

@@ -4,7 +4,7 @@
 function [device, latency] = asio()
 
 % The ASIO device number in the audio sytem
-device = 1;  
+device = 0;  
 
 % The number of samples in the buffer of the sound card
 % (delay * f_s = latency time)

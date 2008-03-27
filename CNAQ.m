@@ -111,11 +111,6 @@ varargout{1} = handles.output;
 % uiwait(handles.figure1);
 % ==============================================================
 
-cnaq_version = get_version();
-
-% ==============================================================
-
-
 % ==============================================================
 % INIT
 % ==============================================================
@@ -129,6 +124,7 @@ path(path, cnaq_path);
 path(path, tools_path);
 path(path, pa_path);
 path(path, config_path);
+cnaq_version = get_version();
 
 % Get audio device parameters
 [device, latency] = asio();
@@ -137,9 +133,9 @@ path(path, config_path);
 home_dir = uigetdir(root_dir, 'Choose your workspace');
 
 % Get/Set ID
+set(handles.home_dir_box,'String',home_dir);
 id = get_id(handles);
 set(handles.ID,'String',id);
-set(handles.home_dir_box,'String',home_dir);
 set(handles.info1_text,'String',['CNAQ v' cnaq_version ' - Copyright (C) 2007-2008']);
 set(handles.info2_text,'String','Guillaume Pellerin, Manuel Melon  CNAM Paris   http://svn.parisson.org/cnaq/');
 
@@ -264,6 +260,7 @@ function voices_out_CreateFcn(hObject, eventdata, handles)
     if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
         set(hObject,'BackgroundColor','white');
     end
+  
     
 %============================================
 % GENERATOR
@@ -276,6 +273,7 @@ function sig_type_CreateFcn(hObject, eventdata, handles)
         set(hObject,'BackgroundColor','white');
     end
 
+    
 % TIME
 
 function time_gen_min_Callback(hObject, eventdata, handles)
@@ -343,8 +341,7 @@ function f_gen_min_CreateFcn(hObject, eventdata, handles)
 
 function f_gen_Callback(hObject, eventdata, handles)
     set(handles.freq_value,'String',num2str(get(handles.f_gen,'Value')));
-
-
+    
 function f_gen_CreateFcn(hObject, eventdata, handles)
     if isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
         set(hObject,'BackgroundColor',[.9 .9 .9]);
@@ -378,19 +375,16 @@ function close_button_Callback(hObject, eventdata, handles)
 % handles    structure with handles and user data (see GUIDATA)
     close all;
         
-     
 % --- Executes on button press in plot.
 function plot_Callback(hObject, eventdata, handles)
 % hObject    handle to plot (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
     plot_main(handles)
-    
-    
+     
 % SAVE all data in a mat file 
 function save_button_Callback(hObject, eventdata, handles)  
     save_mes(handles)
-
 
 % --- Executes on button press in load.
 function load_Callback(hObject, eventdata, handles)
@@ -399,3 +393,5 @@ function load_Callback(hObject, eventdata, handles)
 % handles    structure with handles and user data (see GUIDATA)
     load_mes(handles)
 
+    
+    
