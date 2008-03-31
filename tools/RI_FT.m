@@ -1,4 +1,4 @@
-function [ri,ft]=RI_FT(f, sig_exc, sig_mes)
+function [ri,ft]=RI_FT(f, sig_exc, sig_mes, f_s)
 %calcul d'une fonction de tranfert mesurée par l'interface CNAQ
 %Sorties : fonction de transfert et réponse impulsionnelle 
 

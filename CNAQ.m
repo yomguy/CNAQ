@@ -174,6 +174,32 @@ set(handles.save_button,'UserData',latency);
 
     
 %============================================
+% TOOLS
+%============================================
+    
+function set_fs(handles, f_s)
+    if f_s == 44100
+        fs_ind = 1;
+    elseif f_s == 48000
+        fs_ind = 2;
+    elseif f_s == 88200
+        fs_ind = 3;
+    elseif f_s == 96000
+        fs_ind = 4;
+    elseif f_s == 192000
+        fs_ind = 5;
+    end
+    set(handles.f_s,'Value',fs_ind);
+    
+function set_nbits(handles, nbits)
+    if nbits == 16
+        nb_ind = 1;
+    elseif nbits == 24
+        nb_ind = 2;
+    end
+    set(handles.nbits,'Value', nb_ind);
+    
+%============================================
 % DATA
 %============================================
 
@@ -385,13 +411,40 @@ function plot_Callback(hObject, eventdata, handles)
 % SAVE all data in a mat file 
 function save_button_Callback(hObject, eventdata, handles)  
     save_mes(handles)
+    
 
 % --- Executes on button press in load.
-function load_Callback(hObject, eventdata, handles)
+function load_Callback(hObject, eventdata, handless)
 % hObject    handle to load (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
-    load_mes(handles)
+% handless    structure with handless and user data (see GUIDATA)
+    
+    [filename, pathname, filterindex] = uigetfile('*.mat', 'Pick a saved MAT file');
+    load([pathname filename]);
+    
+    % Set data
+    set(handless.username,'String',username);
+    set(handless.home_dir_box,'String',home_dir);
+    set(handless.comment,'String',comment);
+    set(handless.id_title,'UserData',sig_exc);
+    set(handless.ID,'UserData',sig_mes);
+    set(handless.mes_on,'UserData',f_log);
+    set(handless.close_button,'UserData',f_lin);
+    set(handless.mes_on,'UserData', f);
+    set(handless.plot,'UserData', t);
+    set(handless.f_gen_min,'String', num2str(f_min));
+    set(handless.f_gen_max,'String', num2str(f_max));
+    set(handless.f_gen,'Value', f);
+    set(handless.freq_value,'String',num2str(f));
+    set(handless.time_gen,'Value', time);
+    set(handless.time_value,'String',num2str(time));
+    set(handless.gain_in,'Value', gain_in);
+    set(handless.gain_out,'Value', gain_out);
+    set(handless.gain_in_value,'String',num2str(gain_in));
+    set(handless.gain_out_value,'String',num2str(gain_out));
+    set(handless.freq_value,'String',num2str(f));
+    set(handless.time_value,'String',num2str(time));
+    set_fs(handless, f_s);
+    set_nbits(handless, nbits);
+    
 
-    
-    
