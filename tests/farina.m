@@ -1,90 +1,99 @@
-% Cette routine permet de comparer deux méthodes de traitement
+% Cette routine permet de comparer trois méthodes de traitement
 % des sinus glissants (glissement logarithmique)
 % Le signal d'excitation est généré selon la méthode proposée par Farina
-% les deux méthodes de traitement sont :
+% les trois méthodes de traitement sont :
 % - Fonction de Transfert 
 % - Déconvolution par filtre inverse
+% - Déconvolution par filtre inverse avec passage dans le domaine
+% fréquentiel
 % Le système de test est un filtre passe-bas (type RC)
-% les paramètres à faire varier sont  :
+% les paramètres à faire varier sont :
 % f1 et f2, les fréquences encadrant le signal généré
 % nwin le nombre de points sur lequel on fenêtre le signal (en début et en fin)
 % tmax : la durée du sinus glissant
 
-
 clear all
 close all
-%paramètres à faire varier
-f1=5; %fréquence de départ du sinus glissant (Hz)
-f2=8000; %fréquence d'arrivée du sinus glissant (Hz)
-nwin=400; % somme des nombres de point à fenêtrer en début et fin de signal
-tmax=0.5; %durée du sinus glissant (s)
+%input parameters
+f1=1; % start frequency (Hz)
+f2=10000; %end frequency(Hz)
+tmax=.5; % excitation signal duration (s)
+nwin=100; % windowing point number (half at the begining - half at the end)
 
-%Génération du chirp (Farina)
-fs=44100; %fréquence d'échantillonnage (Hz)
-dt=1/fs; %pas temporel
-t=0:dt:tmax; %vecteur temps
-om1=2*pi*f1; %pulsation basse
-om2=2*pi*f2; %pulsation haute
+%chirp generation (Farina)
+fs=44100; % sampling frequency (Hz)
+dt=1/fs; % sampling period 
+t=0:dt:tmax; % time vector
+om1=2*pi*f1; % begining pulsation
+om2=2*pi*f2; % ending pulsation 
 K=tmax*om1/log(om2/om1);
 L=tmax/log(om2/om1);
-yc=sin(K*(exp(t./L)-1)); %Sinus glissant (Farina)
+yc=sin(K*(exp(t./L)-1)); % excitation signal (logarithmic swept signal)
 
-%fenêtrage du chirp
-win=hanning(nwin);
+%chirp windowing
+win=hanning(nwin); 
 siz=length(yc);
 wint=ones(1,siz);
 wint(1:nwin/2)=win(1:nwin/2);
 wint(siz-nwin/2+1:siz)=win(nwin/2+1:nwin);
-y=yc.*wint; %Sinus glissant fenêtré
-% yinv=fliplr(y);
-% co=conv(y,yinv);
-% figure
-% plot(co)
+y=yc.*wint; %windowed swept sine
 
-%test sur filtre passe-bas : contruction du signal filtré par méthode
-%récursive
-fc=400; %fréquence de coupuer du filtre
+%Test on a low pass filter: processing of the filtered signal (iterative
+% method)
+fc=400; % cut-off frequency
 RC=1/2/pi/fc; 
 alf=dt/(dt+RC);
 yf(1)=y(1);
 for n=2:siz
-    yf(n)=alf*y(n)+(1-alf)*yf(n-1); %Signal filtré
+   yf(n)=alf*y(n)+(1-alf)*yf(n-1); % filtered signal
 end
-figure (1)
-plot(t,yf)
-xlabel('Time (s)')
-title('Input signal')
-grid on
 
-%Déconvolution par filtre inverse en temporel (Farina)
-yinv=fliplr(yc);
+%plot of the input and filtered signals
+figure (1)
+plot(t,y,'b'); 
+xlabel('Time (s)');
+hold on 
+plot(t,yf,'r')
+title('Input signals')
+grid on
+h = legend('Input signal','filtered signal',2);
+set(h,'location','SouthWest')
+
+% Impulse response: Inverse filter deconvolution (time domain)
+yinv=fliplr(y);
 fl=logspace(log10(f1),log10(f2),siz);
-yinv=yinv./fl;
-yinvf=yinv.*wint;
-IR=conv(yf,yinvf);
+yinv=yinv./fl; % inverse filter
+tic
+IR=conv(yf,yinv); % processed impulse response
+toc
+sizi=length(IR);
+is=fft(y).*conj(fft(yinv));
+norm=sqrt(sum(abs(is.^2))/siz);
+yeff=norm*sqrt(fs/2/(f2-f1));
+IR=IR*fs/yeff;
+t2=(-siz+1:1:siz-1).*dt;
 figure(2)
-subplot(2,1,1)
-plot(IR)
+subplot(3,1,1)
+plot(t2,IR,'b')
 grid on
 xlabel('samples')
 title('Impulse response')
 ylabel('Deconvolution')
-sizi=length(IR);
-FR=fft(IR);
+IRT=exp(-t2/RC)/RC;
+IRT(1:siz-1)=0;
+hold on 
+plot(t2,IRT,'r')
+
+% frequency response : Inverse filter deconvolution (time domain)
+FR=fft(IR)/fs;
 FR=FR(1:sizi/2);
 fconv=0:fs/sizi:fs/2;
 fconv=fconv(1:sizi/2);
 LFR=20*log10(abs(FR));
-autoc=conv(yc,yinv);
-yeff=sqrt(sum(autoc.^2)*fs/2/(f2-f1));
-% yeff=sizi/2*(f2-f1)/fs
-% yeff=1
-sf=20*log10(yeff);
-LFR=LFR-sf;
 figure(3)
-subplot(2,1,1)
-% title('Frequency response (dB)')
+subplot(3,1,1)
 semilogx(fconv,LFR)
+ylabel('Transfert function (decovonlution)')
 title('Frequency response (dB)')
 axis([10 20000 -40 +5])
 grid on
@@ -95,15 +104,19 @@ semilogx(fconv,LFRT,'r')
 xlabel('Frequency (Hz)')
 legend('Processed','Theory',3)
 
-%Méthode de la fonction de transfert
+%Transfer function method
 specy=fft(y);
 specyf=fft(yf);
 TF=specyf./specy;
-IR2=fftshift(ifft(TF));
+IR2=ifft(TF)*fs;
 figure(2)
-subplot(2,1,2)
-plot(IR2)
+subplot(3,1,2)
+pad=zeros(1,siz-1);
+IR2=[pad IR2];
+plot(t2,IR2,'b')
 grid on
+hold on 
+plot(t2,IRT,'r')
 xlabel('samples')
 ylabel('Inverse Transfer Function')
 TF2=TF(1:siz/2);
@@ -111,13 +124,64 @@ f=0:fs/siz:fs/2;
 f=f(1:siz/2);
 LFR2=20*log10(abs(TF2));
 figure(3)
-subplot(2,1,2)
+subplot(3,1,2)
 semilogx(f,LFR2)
 axis([10 20000 -40 +5])
 grid on
-hold on 
+hold on
 FRT2=abs(1./(1+j*2*pi*f*RC));
 LFRT2=20*log10(FRT2);
 semilogx(f,LFRT2,'r')
+xlabel('Frequency (Hz)')
+ylabel('Transfer Function')
+legend('Processed','Theory',3)
+
+% Impulse response: Inverse filter deconvolution (freq domain)
+% yinv=fliplr(yc);
+% fl=logspace(log10(f1),log10(f2),siz);
+% yinv=yinv./fl; % inverse filter
+% yinvf=yinv.*wint; %windowed inverse filter
+% IR=conv(yf,yinvf); % processed impulse response
+tic 
+iRF=fft([yf, zeros(1,siz-1)]).*fft([yinv, zeros(1,siz-1)])/yeff;
+IR3=real(ifft(iRF))*fs;
+toc
+% norm=sqrt(sum(abs(is.^2))/siz);
+% yeff=norm*sqrt(fs/2/(f2-f1));
+% scal=fs/yeff;
+t2=(-siz+1:1:siz-1).*dt;
+figure(2)
+subplot(3,1,3)
+plot(t2,IR3,'b')
+grid on
+xlabel('samples')
+title('Impulse response')
+ylabel('Deconvolution freq')
+IRT=exp(-t2/RC)/RC;
+IRT(1:siz-1)=0;
+hold on 
+plot(t2,IRT,'r')
+
+% frequency response : Inverse filter deconvolution (freq domain)
+FR3=iRF(1:sizi/2);
+fconv=0:fs/sizi:fs/2;
+fconv=fconv(1:sizi/2);
+LFR3=20*log10(abs(FR3));
+figure(3)
+subplot(3,1,3)
+semilogx(fconv,LFR3)
+ylabel('Transfert function (deconv freq)')
+title('Frequency response (dB)')
+axis([10 20000 -40 +5])
+grid on
+hold on
+FRT=abs(1./(1+j*2*pi*fconv*RC));
+LFRT=20*log10(FRT);
+imin=round(f1/fs*sizi)+1;
+imax=round(f2/fs*sizi)+1;
+E3=sqrt(sum(abs(FRT(imin:imax)-FR3(imin:imax)).^2./(abs(FRT(imin:imax)).^2)))*100/(imax-imin+1);
+E3t = strcat('Erreur quadratique :',num2str(E3,2),' %');
+text(3000,-5,E3t);
+semilogx(fconv,LFRT,'r')
 xlabel('Frequency (Hz)')
 legend('Processed','Theory',3)
