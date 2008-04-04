@@ -16,7 +16,7 @@ function plot_main(handles)
     mes_type = get(handles.mes_type,'Value');
     
     % Compute excitation spectrum    
-    [rep_imp_exc, spec_exc] = get_ri_spec(f, sig_exc, sig_exc, f_s);
+    [rep_imp_exc, spec_exc] = get_ri_spec(f, sig_exc, sig_exc, f_s, mes_type);
     
     len_spec_exc = length(spec_exc);
     spec_exc = spec_exc(1:len_spec_exc/2);
@@ -27,7 +27,7 @@ function plot_main(handles)
     % Compute all Ris and specs
     for i=1:n_col_sig_mes
         voice = num2str(i);
-        [rep_imp_mes, spec_mes] = get_ri_spec(f, sig_exc, sig_mes(:,i), f_s);
+        [rep_imp_mes, spec_mes] = get_ri_spec(f, sig_exc, sig_mes(:,i), f_s, mes_type);
         len_spec_mes = length(spec_mes);    
         spec_mes = spec_mes(1:len_spec_mes/2);
         % Plot results
