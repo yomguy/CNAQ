@@ -169,35 +169,10 @@ set(handles.sig_type,'String','Sinus|Chirp|White noise|Pink noise');
 set(handles.voices_in,'String','1|1 2|1 2 3|1 2 3 4');
 set(handles.voices_out,'String','1|1 2|1 2 3|1 2 3 4');
 
+set(handles.mes_type,'String','Transfert function|Impulse response');
 set(handles.in_on_off,'UserData',device);
 set(handles.save_button,'UserData',latency);
 
-    
-%============================================
-% TOOLS
-%============================================
-    
-function set_fs(handles, f_s)
-    if f_s == 44100
-        fs_ind = 1;
-    elseif f_s == 48000
-        fs_ind = 2;
-    elseif f_s == 88200
-        fs_ind = 3;
-    elseif f_s == 96000
-        fs_ind = 4;
-    elseif f_s == 192000
-        fs_ind = 5;
-    end
-    set(handles.f_s,'Value',fs_ind);
-    
-function set_nbits(handles, nbits)
-    if nbits == 16
-        nb_ind = 1;
-    elseif nbits == 24
-        nb_ind = 2;
-    end
-    set(handles.nbits,'Value', nb_ind);
     
 %============================================
 % DATA
@@ -391,7 +366,7 @@ function mes_type_CreateFcn(hObject, eventdata, handles)
 
 function mes_on_Callback(hObject, eventdata, handles, device)
     measurement(handles)
-    plot_Callback(hObject, eventdata, handles)
+    plot_main(handles)
     
 % Close all figures
 % --- Executes on button press in close_button.

@@ -56,7 +56,7 @@ function measurement(handles)
     % Measure
     sig_mes = pa_wavplayrecord(sig_out, device, f_s, 0, voice_first, voice_last, device, 'asio');
     %    Usage:
-    %      inputbuffer = pa_wavplayrecord(playbuffer,[playdevice],[samplerate],
+    %    inputbuffer = pa_wavplayrecord(playbuffer,[playdevice],[samplerate],
     %                       [recnsamples], [recfirstchannel], [reclastchannel],
     %                       [recdevice], [devicetype])
     
