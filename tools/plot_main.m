@@ -8,21 +8,19 @@ function plot_main(handles)
     f_min = str2double(get(handles.f_gen_min,'String'));
     f_max = str2double(get(handles.f_gen_max,'String'));
     f_s = get_fs(handles);
+    size_sig_mes = size(sig_mes);
+    n_col_sig_mes = size_sig_mes(2);
     
     % Get infos
     username = get(handles.username,'String');
     comment = get(handles.comment,'String');
     id = get(handles.ID,'String');
     mes_type = get(handles.mes_type,'Value');
-    
+            
     % Compute excitation spectrum    
     [rep_imp_exc, spec_exc] = get_ri_spec(f, sig_exc, sig_exc, f_s, mes_type);
-    
     len_spec_exc = length(spec_exc);
     spec_exc = spec_exc(1:len_spec_exc/2);
-    
-    size_sig_mes = size(sig_mes);
-    n_col_sig_mes = size_sig_mes(2);
     
     % Compute all Ris and specs
     for i=1:n_col_sig_mes
