@@ -16,13 +16,13 @@ title(['Signal temporel mesuré (groupe: ' group ', id: ' id ', voie : ' voice ')
 grid on;
 
 subplot(2,1,2);
-rep_imp_mes = real(rep_imp_mes);
 len_ri = length(rep_imp_mes);
-t_ri = [-len_ri/(2*f_s):1/f_s:len_ri/(2*f_s)];
-t_ri = t_ri(2:length(t_ri));
+t_ri = [(-len_ri+1)/(2*f_s):1/f_s:len_ri/(2*f_s)];
+%t_ri = [0:1/f_s:len_ri/f_s];
+t_ri = t_ri(1:length(t_ri)-1);
 plot(t_ri, rep_imp_mes);
 %semilogx(t, sig_mes);
-axis([t_ri(1) t_ri(len_ri) min(rep_imp_mes)-0.01 max(rep_imp_mes)+0.01]);
+axis([-t_ri(len_ri) t_ri(len_ri) min(rep_imp_mes)-0.01 max(rep_imp_mes)+0.01]);
 %axis([1 t(length(t)) min(sig_mes)-0.01 max(sig_mes)+0.01]);
 xlabel('Temps (s)');
 ylabel('Amplitude');

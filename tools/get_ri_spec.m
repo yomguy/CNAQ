@@ -3,7 +3,7 @@ function [ri, spec] = get_spec_ri(f, sig_exc, sig_mes, f_s, mes_type)
     
     if mes_type == 1
         % Frequency method
-        [ri, spec] = fonc_trans(f, sig_exc, sig_mes);
+        [ri, spec] = fonc_trans(f, sig_exc, sig_mes, f_s);
     elseif mes_type == 2
         % Temporal method
         [ri, spec] = RI_FT(f, sig_exc, sig_mes, f_s);
