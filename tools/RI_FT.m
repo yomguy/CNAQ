@@ -10,7 +10,7 @@ f0 = f(1);
 f1 = f(len_f);
 
 % Methode du produit
-siginv=fliplr(sig_exc)./f;
+siginv=flipud(sig_exc)./f;
 ft=fft([sig_mes; zeros(len_f-1,1)]).*fft([siginv; zeros(len_f-1,1)]);
 ri=real(ifft(ft));
 norm=sqrt(sum(abs(ri.^2))/len_f);

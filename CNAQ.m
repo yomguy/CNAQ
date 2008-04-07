@@ -1,7 +1,7 @@
 function varargout = CNAQ(varargin)
 %  CNAQ M-file for CNAQ.fig
 %
-%  Copyright (c) 2007 Guillaume Pellerin <guillaume.pellerin@cnam.fr>
+%  Copyright (c) 2007-2008 Guillaume Pellerin <guillaume.pellerin@cnam.fr>
 %  All rights reserved.
 
 %  This software is governed by the CeCILL license under French law and
