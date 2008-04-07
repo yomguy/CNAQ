@@ -9,8 +9,10 @@ function save_mes(handles)
     sig_mes = get(handles.ID,'UserData');
     f_log = get(handles.mes_on,'UserData');
     f_lin = get(handles.close_button,'UserData');
-    f_s = get_fs(handles);
-    nbits = get_nbits(handles);
+    fs_id = get(handles.f_s,'Value');
+    nb_id = get(handles.nbits,'Value');
+    f_s = get_fs(fs_id);
+    nbits = get_nbits(nb_id);
     f = get(handles.mes_on,'UserData');
     t = get(handles.plot,'UserData');
     f_min = str2double(get(handles.f_gen_min,'String'));
