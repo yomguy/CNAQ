@@ -16,7 +16,7 @@ clear all
 close all
 %input parameters
 f1=1; % start frequency (Hz)
-f2=10000; %end frequency(Hz)
+f2=20000; %end frequency(Hz)
 tmax=.5; % excitation signal duration (s)
 nwin=100; % windowing point number (half at the begining - half at the end)
 
@@ -83,6 +83,7 @@ IRT=exp(-t2/RC)/RC;
 IRT(1:siz-1)=0;
 hold on 
 plot(t2,IRT,'r')
+legend('Processed','Theory',3)
 
 % frequency response : Inverse filter deconvolution (time domain)
 FR=fft(IR)/fs;
@@ -103,6 +104,11 @@ LFRT=20*log10(FRT);
 semilogx(fconv,LFRT,'r')
 xlabel('Frequency (Hz)')
 legend('Processed','Theory',3)
+imin=round(f1/fs*sizi)+1;
+imax=round(f2/fs*sizi)+1;
+E1=sqrt(sum(abs(FRT(imin:imax)-FR(imin:imax)).^2./(abs(FRT(imin:imax)).^2)))*100/(imax-imin+1);
+E1t = strcat('Erreur quadratique :',num2str(E1,2),' %');
+text(3000,-5,E1t);
 
 %Transfer function method
 specy=fft(y);
@@ -111,17 +117,17 @@ TF=specyf./specy;
 IR2=ifft(TF)*fs;
 figure(2)
 subplot(3,1,2)
-pad=zeros(1,siz-1);
-IR2=[pad IR2];
-plot(t2,IR2,'b')
+% pad=zeros(1,siz-1);
+% IR2=[pad IR2];
+plot(t,IR2,'b')
 grid on
 hold on 
 plot(t2,IRT,'r')
 xlabel('samples')
 ylabel('Inverse Transfer Function')
+legend('Processed','Theory',3)
 TF2=TF(1:siz/2);
-f=0:fs/siz:fs/2;
-f=f(1:siz/2);
+f=0:fs/siz:fs/2-fs/siz;
 LFR2=20*log10(abs(TF2));
 figure(3)
 subplot(3,1,2)
@@ -135,6 +141,11 @@ semilogx(f,LFRT2,'r')
 xlabel('Frequency (Hz)')
 ylabel('Transfer Function')
 legend('Processed','Theory',3)
+% imin=round(f1/fs*sizi)+1;
+% imax=round(f2/fs*sizi)+1;
+% E2=sqrt(sum(abs(FRT(imin:imax)-TF2(imin:imax)).^2./(abs(FRT(imin:imax)).^2)))*100/(imax-imin+1);
+% E2t = strcat('Erreur quadratique :',num2str(E2,2),' %');
+% text(3000,-5,E2t);
 
 % Impulse response: Inverse filter deconvolution (freq domain)
 % yinv=fliplr(yc);
@@ -161,6 +172,7 @@ IRT=exp(-t2/RC)/RC;
 IRT(1:siz-1)=0;
 hold on 
 plot(t2,IRT,'r')
+legend('Processed','Theory',3)
 
 % frequency response : Inverse filter deconvolution (freq domain)
 FR3=iRF(1:sizi/2);
