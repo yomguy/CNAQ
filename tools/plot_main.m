@@ -7,7 +7,10 @@ function plot_main(handles)
     t = get(handles.plot,'UserData');
     f_min = str2double(get(handles.f_gen_min,'String'));
     f_max = str2double(get(handles.f_gen_max,'String'));
-    f_s = get_fs(handles);
+    fs_id = get(handles.f_s,'Value');
+    nb_id = get(handles.nbits,'Value');
+    f_s = get_fs(fs_id);
+    nbits = get_nbits(nb_id);
     size_sig_mes = size(sig_mes);
     n_col_sig_mes = size_sig_mes(2);
     

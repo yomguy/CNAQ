@@ -4,7 +4,7 @@ function [ri,ft]=RI_FT(f, sig_exc, sig_mes, f_s)
 
 % soustraction de la composante continue
 DC = mean(sig_mes,1);
-sig_mes = sig_mes - DC;
+%sig_mes = sig_mes - DC;
 len_f = length(f);
 f0 = f(1);
 f1 = f(len_f);

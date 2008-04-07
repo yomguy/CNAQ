@@ -6,7 +6,10 @@ function measurement(handles)
     nfft = 32768;
     f_min = str2double(get(handles.f_gen_min,'String'));
     f_max = str2double(get(handles.f_gen_max,'String'));
-    f_s = get_fs(handles);
+    fs_id = get(handles.f_s,'Value');
+    nb_id = get(handles.nbits,'Value');
+    f_s = get_fs(fs_id);
+    nbits = get_nbits(nb_id);
     time = get(handles.time_gen,'Value');
     voices_in = get_voices_in(handles);
     voice_first = voices_in(1);

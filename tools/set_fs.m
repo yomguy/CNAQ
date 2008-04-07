@@ -1,4 +1,5 @@
-function set_fs(handles, f_s)
+function fs_ind = set_fs(f_s)
+% Return the id of the item in the sampling frequency list
 
     if f_s == 44100
         fs_ind = 1;
@@ -11,7 +12,5 @@ function set_fs(handles, f_s)
     elseif f_s == 192000
         fs_ind = 5;
     end
-
-    set(handles.f_s,'Value',fs_ind);
 
 end

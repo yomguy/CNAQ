@@ -1,6 +1,5 @@
-function f_s = get_fs(handles)
+function f_s = get_fs(fs_ind)
 
-    fs_ind = get(handles.f_s,'Value');
     if fs_ind == 1
         f_s = 44100;
     elseif fs_ind == 2

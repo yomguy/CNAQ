@@ -4,7 +4,10 @@ function generator(handles)
     f_max = str2double(get(handles.f_gen_max,'String'));
     sig_type = get(handles.sig_type,'Value');
     sin_freq = get(handles.f_gen,'Value');
-    f_s = get_fs(handles);
+    fs_id = get(handles.f_s,'Value');
+    nb_id = get(handles.nbits,'Value');
+    f_s = get_fs(fs_id);
+    nbits = get_nbits(nb_id);
     time = get(handles.time_gen,'Value');
     voices_out = get_voices_out(handles);
     %voice_first = voices_out(1);

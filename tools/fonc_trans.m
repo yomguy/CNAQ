@@ -12,3 +12,4 @@ X = fft([sig_exc;zeros(len_f-1,1)]);
 Y = fft([zeros(len_f-1,1);sig_mes]);
 ft = Y./X;
 ri = real(ifft(ft))*f_s;
+%ri = [0; ri(1:length(ri)-1)];
