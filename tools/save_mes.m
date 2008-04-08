@@ -18,9 +18,9 @@ function save_mes(handles)
     f_min = str2double(get(handles.f_gen_min,'String'));
     f_max = str2double(get(handles.f_gen_max,'String'));
     time = get(handles.time_gen,'Value');
-    voices_in = get_voices_in(handles);
+    channels_in = get_channels_in(handles);
     gain_in = get(handles.gain_in,'Value');
-    voices_out = get_voices_out(handles);
+    channels_out = get_channels_out(handles);
     gain_out = get(handles.gain_out,'Value');
     
     % Save it

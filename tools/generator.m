@@ -9,9 +9,8 @@ function generator(handles)
     f_s = get_fs(fs_id);
     nbits = get_nbits(nb_id);
     time = get(handles.time_gen,'Value');
-    voices_out = get_voices_out(handles);
-    %voice_first = voices_out(1);
-    %voice_last = voices_out(length(voices_out));
+    ch_out_id = get(handles.channels_out,'Value');
+    channels_out = get_channels_in(ch_out_id);
     gain_out = get(handles.gain_out,'Value');
     gain_out = 10^(gain_out/20);
     t = [0:1/f_s:time];
@@ -32,13 +31,13 @@ function generator(handles)
     end
   
     sig_out = [];
-    for i=1:length(voices_out)
+    for i=1:length(channels_out)
         sig_out(:,i) = sig';
     end
 
     % Matlab way (needs Data Acquisition Toolbox)
 %      ao = analogoutput('winsound', 0);
-%      addchannel(ao, voices_out);
+%      addchannel(ao, channels_out);
 %      set(ao, 'StandardSampleRates', 'Off');
 %      set(ao, 'SampleRate', f_s);
 %      

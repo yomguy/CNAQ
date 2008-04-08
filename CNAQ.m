@@ -34,7 +34,7 @@ function varargout = CNAQ(varargin)
 
 %  Author: Guillaume Pellerin <guillaume.pellerin@cnam.fr>
 
-% Last Modified by GUIDE v2.5 08-Apr-2008 16:23:22
+% Last Modified by GUIDE v2.5 08-Apr-2008 18:19:43
 
 %      CNAQ, by itself, creates a new CNAQ or raises the existing
 %      singleton*.
@@ -169,7 +169,9 @@ set(handles.sig_type,'String','Sinus|Chirp|White noise|Pink noise');
 set(handles.channels_in,'String','1|1 2|1 2 3|1 2 3 4|1 2 3 4 5 6 7 8');
 set(handles.channels_out,'String','1|1 2|1 2 3|1 2 3 4|1 2 3 4 5 6 7 8');
 
-set(handles.mes_type,'String','Transfert function|Impulse response');
+set(handles.analysis_type,'String','Default');
+set(handles.analysis_method,'String','Transfert function|Deconvolution');
+set(handles.analysis_domain,'String','Frequency|Time');
 set(handles.in_on_off,'UserData',device);
 set(handles.save_button,'UserData',latency);
 
@@ -357,9 +359,9 @@ function gen_on_off_Callback(hObject, eventdata, handles)
 % MEASUREMENT
 %============================================
 
-function mes_type_Callback(hObject, eventdata, handles)
+function analysis_method_Callback(hObject, eventdata, handles)
 
-function mes_type_CreateFcn(hObject, eventdata, handles)
+function analysis_method_CreateFcn(hObject, eventdata, handles)
     if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
         set(hObject,'BackgroundColor','white');
     end
@@ -419,5 +421,53 @@ function load_Callback(hObject, eventdata, handless)
 %      set(handles.gain_out_value,'String',num2str(gain_out));
 %      set(handles.freq_value,'String',num2str(f));
 %      set(handles.time_value,'String',num2str(time));
+
+
+
+
+% --- Executes on selection change in analysis_type.
+function analysis_type_Callback(hObject, eventdata, handles)
+% hObject    handle to analysis_type (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: contents = get(hObject,'String') returns analysis_type contents as cell array
+%        contents{get(hObject,'Value')} returns selected item from analysis_type
+
+
+% --- Executes during object creation, after setting all properties.
+function analysis_type_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to analysis_type (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: popupmenu controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+
+% --- Executes on selection change in analysis_domain.
+function analysis_domain_Callback(hObject, eventdata, handles)
+% hObject    handle to analysis_domain (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: contents = get(hObject,'String') returns analysis_domain contents as cell array
+%        contents{get(hObject,'Value')} returns selected item from analysis_domain
+
+
+% --- Executes during object creation, after setting all properties.
+function analysis_domain_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to analysis_domain (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: popupmenu controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
 
 

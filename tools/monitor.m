@@ -13,14 +13,15 @@ function monitor(handles)
     freq = 2*(f_max-f_min)/buffer;
     f = [0:f_s/buffer:f_s/2];
     f = f(1:length(f)-1);
-    voices_in = get_voices_in(handles);
-    voice_first = voices_in(1);
-    voice_last =  voices_in(length(voices_in));
+    ch_in_id = get(handles.channels_in,'Value');
+    channels_in = get_channels_in(ch_in_id);
+    channel_first = channels_in(1);
+    channel_last =  channels_in(length(channels_in));
         
     while get(handles.in_on_off,'Value') == 1
         % TIME_GEN
         %sig_in = wavrecord(buffer,f_s,2);
-        sig_in = pa_wavrecord(voice_first, voice_last, buffer, f_s, device, 'asio');
+        sig_in = pa_wavrecord(channel_first, channel_last, buffer, f_s, device, 'asio');
         sig_in = sig_in(:,1);
         axes(handles.plot_in_temp);
         cla;
