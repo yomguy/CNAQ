@@ -1,19 +1,23 @@
 function measurement(handles)
 
+    % Init
     pause(0.2);
     device = get(handles.in_on_off,'UserData');
     latency = get(handles.save_button,'UserData');
+    
     nfft = 32768;
     f_min = str2double(get(handles.f_gen_min,'String'));
     f_max = str2double(get(handles.f_gen_max,'String'));
-    fs_id = get(handles.f_s,'Value');
-    nb_id = get(handles.nbits,'Value');
-    f_s = get_fs(fs_id);
-    nbits = get_nbits(nb_id);
     time = get(handles.time_gen,'Value');
-    voices_in = get_voices_in(handles);
-    voice_first = voices_in(1);
-    voice_last =  voices_in(length(voices_in));
+    fs_id = get(handles.f_s,'Value');
+    f_s = get_fs(fs_id);
+    nb_id = get(handles.nbits,'Value');
+    nbits = get_nbits(nb_id);
+    ch_in_id = get(handles.channels_in,'Value');
+    channels_in = get_channels_in(ch_in_id);
+    channel_first = channels_in(1);
+    channel_last =  channels_in(length(channels_in));
+
     gain_out = get(handles.gain_out,'Value');
     gain_out = 10^(gain_out/20);
     
@@ -50,14 +54,14 @@ function measurement(handles)
     sig_exc_z = [sig_exc zero];
     len_sig_exc = length(sig_exc);
     
-    % Make all voices
+    % Init all channels
     sig_out = [];
-    for i=1:length(voices_in)
+    for i=1:length(channels_in)
         sig_out(:,i) = sig_exc_z';
     end
     
     % Measure
-    sig_mes = pa_wavplayrecord(sig_out, device, f_s, 0, voice_first, voice_last, device, 'asio');
+    sig_mes = pa_wavplayrecord(sig_out, device, f_s, 0, channel_first, channel_last, device, 'asio');
     %    Usage:
     %    inputbuffer = pa_wavplayrecord(playbuffer,[playdevice],[samplerate],
     %                       [recnsamples], [recfirstchannel], [reclastchannel],

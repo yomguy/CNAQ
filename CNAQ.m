@@ -34,7 +34,7 @@ function varargout = CNAQ(varargin)
 
 %  Author: Guillaume Pellerin <guillaume.pellerin@cnam.fr>
 
-% Last Modified by GUIDE v2.5 12-Jan-2008 11:35:34
+% Last Modified by GUIDE v2.5 08-Apr-2008 16:23:22
 
 %      CNAQ, by itself, creates a new CNAQ or raises the existing
 %      singleton*.
@@ -166,8 +166,8 @@ set(handles.f_s,'String','44100|48000|88200|96000|192000');
 set(handles.in_on_off,'Value',0);
 set(handles.gen_on_off,'Value',0);
 set(handles.sig_type,'String','Sinus|Chirp|White noise|Pink noise');
-set(handles.voices_in,'String','1|1 2|1 2 3|1 2 3 4');
-set(handles.voices_out,'String','1|1 2|1 2 3|1 2 3 4');
+set(handles.channels_in,'String','1|1 2|1 2 3|1 2 3 4|1 2 3 4 5 6 7 8');
+set(handles.channels_out,'String','1|1 2|1 2 3|1 2 3 4|1 2 3 4 5 6 7 8');
 
 set(handles.mes_type,'String','Transfert function|Impulse response');
 set(handles.in_on_off,'UserData',device);
@@ -248,16 +248,16 @@ function gain_out_CreateFcn(hObject, eventdata, handles)
         set(hObject,'BackgroundColor',[.9 .9 .9]);
     end
 
-function voices_in_Callback(hObject, eventdata, handles)
+function channels_in_Callback(hObject, eventdata, handles)
 
-function voices_in_CreateFcn(hObject, eventdata, handles)
+function channels_in_CreateFcn(hObject, eventdata, handles)
     if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
         set(hObject,'BackgroundColor','white');
     end
 
-function voices_out_Callback(hObject, eventdata, handles)
+function channels_out_Callback(hObject, eventdata, handles)
 
-function voices_out_CreateFcn(hObject, eventdata, handles)
+function channels_out_CreateFcn(hObject, eventdata, handles)
     if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
         set(hObject,'BackgroundColor','white');
     end
