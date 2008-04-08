@@ -3,7 +3,8 @@ function monitor(handles)
     device = get(handles.in_on_off,'UserData');
     buffer = 8192;
     window = hanning(buffer);
-    f_s = get_fs(handles);
+    fs_id = get(handles.f_s,'Value');
+    f_s = get_fs(fs_id);
     time = buffer/f_s;
     t = [0:1/f_s:time-1/f_s];
     
