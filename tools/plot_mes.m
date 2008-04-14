@@ -27,7 +27,7 @@ if domain == 1
     semilogx(f, ang);
     axis([f_min f_max min(ang(f_min_ind:f_max_ind)) max(ang(f_min_ind:f_max_ind))]);
     grid on;
-    xlabel('Fréquence (Hz)');
+    xlabel('Frequency (Hz)');
     ylabel('Phase (rad)');
     title(['Phasis of the transfert function (group: ' group ', id: ' id ', channel : ' channel ')']);
 
