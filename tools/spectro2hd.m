@@ -8,7 +8,7 @@ function [S, f, t, f_1, h] = spectro2hd(s, f_s, f_min, f_max, n_harm)
     noise_floor = -60; % (dB)
     n_harm = 4;
     
-    [S, f, t] = spectrogram(s, f_s, window, step, f_min, f_max, 'hanning', noise_floor);
+    [S, f, t] = spectrogram2(s, f_s, window, step, f_min, f_max, 'hanning', noise_floor);
     S = 20*log10(S);
     colormap(jet(ncmap));
     
