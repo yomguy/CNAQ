@@ -87,63 +87,18 @@
 %% TODO: Consider using step vs. [nT, nF] rather than maxF vs [maxF, nF]
 %% TODO: Figure out why exist() is so slow: 50 ms vs 1 ms for lookup.
 
-function [S_r, f_r, t_r] = spectrogram(x, Fs, window, step, maxF, shape, minE)
-    spectrogram_window=30;
-    spectrogram_step=5;
-    spectrogram_maxF=4000;
-    spectrogram_shape='hanning';
-    spectrogram_minE=-40;
-    spectrogram_maxE=0;
-    spectrogram_nF=[];
-
-  if nargin < 2 || nargin > 7
-    %usage("[S, f, t] = spectrogram(x, fs, window, step, maxF, shape, minE)");
-  end
-
-  if nargin<3 || isempty(window)
-    window=spectrogram_window; 
-  end
-  if nargin<4 || isempty(step)
-    step=spectrogram_step; 
-  end
-  if nargin<5 || isempty(maxF) 
-    maxF=spectrogram_maxF; 
-  end
-  if nargin<6 || isempty(shape) 
-    shape=spectrogram_shape;
-  end
-  if nargin<7 || isempty(minE)
-    minE=spectrogram_minE; 
-  end
-  if any(minE>0)
-    %error("spectrogram clipping range must use values less than 0 dB");
-  end
-  if length(minE)>1
-    maxE=minE(2); 
-    minE=minE(1); 
-  else
-    maxE = spectrogram_maxE;
-  end
-  if length(maxF)>1
-    min_nF=maxF(2);
-    maxF=maxF(1);
-  else
-    min_nF=spectrogram_nF;
-  end
-
-  %% make sure x is a column vector
-  if size(x,2) ~= 1 && size(x,1) ~= 1
-    %error("spectrogram data must be a vector");
-  end
-  if size(x,2) ~= 1, x = x'; end
-
-  if (maxF>Fs/2)
-    %% warning("spectrogram: cannot display frequencies greater than Fs/2");
-    maxF = Fs/2;
-  end
-
+function [S, f, t] = spectrogram(x, Fs, window, step, minF, maxF, shape, minE)
+%      spectrogram_window=30;
+%      spectrogram_step=5;
+%      spectrogram_maxF=4000;
+%      spectrogram_shape='hanning';
+%      spectrogram_minE=-40;
+%      spectrogram_nF=1;
+%       spectrogram_maxE=0;
+    
+  maxE=0;
   step_n = fix(step*Fs/1000);    % one spectral slice every step ms
-
+    
   %% generate window from duration and shape function name
   win_n = fix(window*Fs/1000);
   if shape(length(shape)) == ')' 
@@ -152,8 +107,9 @@ function [S_r, f_r, t_r] = spectrogram(x, Fs, window, step, maxF, shape, minE)
     shape = [shape '(' num2str(win_n) ')'];
   end
   win_vec = eval([shape]);
-  if size(win_vec,2) ~= 1, win_vec = win_vec'; end
-  if size(win_vec,2) ~= 1 || size(win_vec,1) ~= win_n,
+  if size(win_vec,2) ~= 1
+    win_vec = win_vec'; end
+  if size(win_vec,2) ~= 1 || size(win_vec,1) ~= win_n
     %error("spectrogram %s did not return a window of length %d", \ shape, win_n);
   end
 	  
@@ -161,9 +117,9 @@ function [S_r, f_r, t_r] = spectrogram(x, Fs, window, step, maxF, shape, minE)
   fft_n = 2^nextpow2(win_n);    % next highest power of 2
   dF = Fs/fft_n;                % freq. step with current fft_n
   nF = ceil(maxF(1)/dF);        % freq. pts with current fft_n,maxF
-  if ~isempty(min_nF)           % make sure there are at least n freq. pts
-    if min_nF > nF,             % if not enough
-      dF = maxF/min_nF;            % figure out what freq. step we need
+  if ~isempty(minF)           % make sure there are at least n freq. pts
+    if minF > nF             % if not enough
+      dF = maxF/minF;            % figure out what freq. step we need
       fft_n = 2^nextpow2(Fs/dF);   % figure out what fft_n this requires
       dF = Fs/fft_n;               % freq. step with new fft_n
       nF = ceil(maxF/dF);          % freq. pts with new fft_n,maxF
@@ -184,14 +140,11 @@ function [S_r, f_r, t_r] = spectrogram(x, Fs, window, step, maxF, shape, minE)
   S = max(S, 10^(minE/10));  % clip below minF dB.
   S = min(S, 10^(maxE/10));  % clip above maxF dB.
 
-  f = [0:nF-1]*Fs/fft_n;
+  f = [minF:nF]*Fs/fft_n;
   t = offset/Fs;
 %    if nargout==0
 %      imagesc(f,t,20*log10(flipud(S)));
 %    else
-    S_r = S;
-    f_r = f;
-    t_r = t;
 %  end
 
 end
