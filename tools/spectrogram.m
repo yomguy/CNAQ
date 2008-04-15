@@ -101,6 +101,7 @@ function [S, f, t] = spectrogram(x, Fs, window, step, minF, maxF, shape, minE)
     
   %% generate window from duration and shape function name
   win_n = fix(window*Fs/1000);
+  
   if shape(length(shape)) == ')' 
     shape = sprintf(shape, win_n);
   else
@@ -140,7 +141,7 @@ function [S, f, t] = spectrogram(x, Fs, window, step, minF, maxF, shape, minE)
   S = max(S, 10^(minE/10));  % clip below minF dB.
   S = min(S, 10^(maxE/10));  % clip above maxF dB.
 
-  f = [minF:nF]*Fs/fft_n;
+  f = [minF:Fs/fft_n:maxF];
   t = offset/Fs;
 %    if nargout==0
 %      imagesc(f,t,20*log10(flipud(S)));
