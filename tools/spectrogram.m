@@ -149,3 +149,4 @@ function [S, f, t] = spectrogram(x, Fs, window, step, minF, maxF, shape, minE)
 %  end
 
 end
+
