@@ -171,7 +171,7 @@ set(handles.channels_out,'String','1|1 2|1 2 3|1 2 3 4|1 2 3 4 5 6 7 8');
 
 set(handles.analysis_type,'String','Default');
 set(handles.analysis_method,'String','Transfert function|Deconvolution');
-set(handles.analysis_domain,'String','Frequency|Time');
+set(handles.analysis_domain,'String','Frequency|Time|Time/Frequency & THD');
 set(handles.in_on_off,'UserData',device);
 set(handles.save_button,'UserData',latency);
 

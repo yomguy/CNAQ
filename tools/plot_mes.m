@@ -35,6 +35,8 @@ elseif domain == 2
     % Time
     figure;
     subplot(2,1,1);
+    size(t)
+    size(sig_mes)
     plot(t, sig_mes);
     %semilogx(t, sig_mes);
     axis([0 t(length(t)) min(sig_mes)-0.01 max(sig_mes)+0.01]);
@@ -55,6 +57,12 @@ elseif domain == 2
     ylabel('Amplitude');
     title(['Measured impulse response (group: ' group ', id: ' id ', channel : ' channel ')']);
     grid on;
+
+
+elseif domain == 3
+    % Time - frequency
+    spectro2hd(sig_mes,f_s,f_min,f_max,5);
+
 
 end
 
