@@ -35,7 +35,6 @@ elseif domain == 2
     % Time
     figure;
     subplot(2,1,1);
-    size(t)
     size(sig_mes)
     plot(t, sig_mes);
     %semilogx(t, sig_mes);
