@@ -170,7 +170,7 @@ set(handles.channels_in,'String','1|1 2|1 2 3|1 2 3 4|1 2 3 4 5 6 7 8');
 set(handles.channels_out,'String','1|1 2|1 2 3|1 2 3 4|1 2 3 4 5 6 7 8');
 
 set(handles.analysis_type,'String','Default');
-set(handles.analysis_method,'String','Transfert function|Deconvolution');
+set(handles.analysis_method,'String','Transfer function|Deconvolution');
 set(handles.analysis_domain,'String','Frequency|Time|Time/Frequency');
 set(handles.in_on_off,'UserData',device);
 set(handles.save_button,'UserData',latency);
@@ -383,11 +383,12 @@ function plot_Callback(hObject, eventdata, handles)
 % hObject    handle to plot (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-    plot_main(handles)
+    plot_main(handles);
      
 % SAVE all data in a mat file 
-function save_button_Callback(hObject, eventdata, handles)  
-    save_mes(handles)
+function save_button_Callback(hObject, eventdata, handles)
+    cd(home_dir);
+    save_mes(handles);
     
 
 % --- Executes on button press in load.
