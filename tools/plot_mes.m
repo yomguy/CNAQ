@@ -17,7 +17,7 @@ if domain == 1
     axis([f_min f_max min(spec_mes_log(f_min_ind:f_max_ind-1000))-6 max(spec_mes_log(f_min_ind:f_max_ind))+6]);
     xlabel('Frequency (Hz)');
     ylabel('Amplitude (dB)');
-    title(['Modulus of the transfert function (group: ' group ', id: ' id ', channel : ' channel ')']);
+    title(['Modulus of the transfer function (group: ' group ', id: ' id ', channel : ' channel ')']);
     grid on;
 
     subplot(2,1,2);
@@ -29,7 +29,7 @@ if domain == 1
     grid on;
     xlabel('Frequency (Hz)');
     ylabel('Phase (rad)');
-    title(['Phasis of the transfert function (group: ' group ', id: ' id ', channel : ' channel ')']);
+    title(['Phasis of the transfer function (group: ' group ', id: ' id ', channel : ' channel ')']);
 
 elseif domain == 2
     % Time

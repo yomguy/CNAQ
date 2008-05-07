@@ -94,7 +94,7 @@ LFR=20*log10(abs(FR));
 figure(3)
 subplot(3,1,1)
 semilogx(fconv,LFR)
-ylabel('Transfert function (decovonlution)')
+ylabel('Transfer function (deconvolution)')
 title('Frequency response (dB)')
 axis([10 20000 -40 +5])
 grid on
@@ -107,7 +107,7 @@ legend('Processed','Theory',3)
 imin=round(f1/fs*sizi)+1;
 imax=round(f2/fs*sizi)+1;
 E1=sqrt(sum(abs(FRT(imin:imax)-FR(imin:imax)).^2./(abs(FRT(imin:imax)).^2)))*100/(imax-imin+1);
-E1t = strcat('Erreur quadratique :',num2str(E1,2),' %');
+E1t = strcat('Quadratic error :',num2str(E1,2),' %');
 text(3000,-5,E1t);
 
 %Transfer function method
