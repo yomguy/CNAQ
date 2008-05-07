@@ -38,7 +38,7 @@ function measurement(handles)
     window_in = window(1:len_win_in);
     
     len_win_out = fade_out_time * f_s;
-    window = blackman   (len_win_out);
+    window = blackman(len_win_out);
     len_win_out = round(len_win_out/2);
     window_out = flipud(window(1:len_win_out));
     

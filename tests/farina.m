@@ -16,7 +16,7 @@ clear all
 close all
 %input parameters
 f1=1; % start frequency (Hz)
-f2=20000; %end frequency(Hz)
+f2=5000; %end frequency(Hz)
 tmax=.5; % excitation signal duration (s)
 nwin=100; % windowing point number (half at the begining - half at the end)
 
