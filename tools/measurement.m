@@ -22,7 +22,7 @@ function measurement(handles)
     gain_out = 10^(gain_out/20);
     
     % Avoid Gibbs like phenomenon
-    f0 = 1;
+    f0 = f_min*0.9;
     f1 = f_min;
     f2 = f_max;
     f3 = f_s/2;

@@ -170,7 +170,7 @@ set(handles.channels_in,'String','1|1 2|1 2 3|1 2 3 4|1 2 3 4 5 6 7 8');
 set(handles.channels_out,'String','1|1 2|1 2 3|1 2 3 4|1 2 3 4 5 6 7 8');
 
 set(handles.analysis_type,'String','Default');
-set(handles.analysis_method,'String','Transfer function|Deconvolution');
+set(handles.analysis_method,'String','Division|Deconvolution');
 set(handles.analysis_domain,'String','Frequency|Time|Time/Frequency');
 set(handles.in_on_off,'UserData',device);
 set(handles.save_button,'UserData',latency);
@@ -387,6 +387,7 @@ function plot_Callback(hObject, eventdata, handles)
      
 % SAVE all data in a mat file 
 function save_button_Callback(hObject, eventdata, handles)
+    home_dir = get(handles.home_dir_box,'String');
     cd(home_dir);
     save_mes(handles);
     
