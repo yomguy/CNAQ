@@ -12,9 +12,10 @@ function [S, f, t, f_1, h] = spectro2hd(s, f_s, f_min, f_max, n_harm)
     S = 20*log10(S);
     colormap(jet(ncmap));
     
-      size(t)
-      size(f)
-      size(S)
+%      size(t)
+%      size(f)
+%      size(S)
+%      
     t_0 = t(1);
     t_n = t(length(t));
     f_0 = f(1);
