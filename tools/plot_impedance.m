@@ -33,7 +33,7 @@ f_min_ind = f_min_list(length(f_min_list));
 
 figure
 subplot(2,1,1);
-data = smooth(abs(fz),20);
+data = abs(fz);
 if option == 'lin'
     plot(f,data)
 elseif option == 'log'
@@ -46,7 +46,7 @@ title(['Module de l impedance']);
 grid on
 
 subplot(2,1,2);
-data = smooth(unwrap(angle(fz)),20);
+data = unwrap(angle(fz));
 if option == 'lin'
     plot(f,data)
 elseif option == 'log'
