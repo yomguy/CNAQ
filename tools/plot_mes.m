@@ -17,7 +17,7 @@ if domain == 1
     axis([f_min f_max min(spec_mes_log(f_min_ind:f_max_ind-1000))-6 max(spec_mes_log(f_min_ind:f_max_ind))+6]);
     xlabel('Frequency (Hz)');
     ylabel('Amplitude (dB)');
-    title(['Modulus of the transfer function (group: ' group ', id: ' id ', channel : ' channel ')']);
+    title(['Modulus of the transfer function (group: ' group ', id: ' id ', channel : ' channel ', comment :' comment ')']);
     grid on;
 
     subplot(2,1,2);
@@ -29,7 +29,7 @@ if domain == 1
     grid on;
     xlabel('Frequency (Hz)');
     ylabel('Phasis (rad)');
-    title(['Phasis of the transfer function (group: ' group ', id: ' id ', channel : ' channel ')']);
+    title(['Phasis of the transfer function (group: ' group ', id: ' id ', channel : ' channel ', comment :' comment ')']);
 
 elseif domain == 2
     % Time
@@ -42,7 +42,7 @@ elseif domain == 2
     %axis([1 t(length(t)) min(sig_mes)-0.01 max(sig_mes)+0.01]);
     xlabel('Time (s)');
     ylabel('Amplitude');
-    title(['Measured temporal signal (group: ' group ', id: ' id ', channel : ' channel ')']);
+    title(['Measured temporal signal (group: ' group ', id: ' id ', channel : ' channel ', comment :' comment ')']);
     grid on;
 
     subplot(2,1,2);
@@ -54,7 +54,7 @@ elseif domain == 2
     axis([-t_ri(len_ri) t_ri(len_ri) min(rep_imp_mes)-0.01 max(rep_imp_mes)+0.01]);
     xlabel('Time (s)');
     ylabel('Amplitude');
-    title(['Measured impulse response (group: ' group ', id: ' id ', channel : ' channel ')']);
+    title(['Measured impulse response (group: ' group ', id: ' id ', channel : ' channel ', comment :' comment ')']);
     grid on;
 
 

@@ -26,7 +26,7 @@ function save_mes(handles)
     gain_out = get(handles.gain_out,'Value');
     
     % Save it
-    file = [home_dir '\' username '_' id '.mat'];
+    file = [home_dir '\' username '_' id '_' comment '.mat'];
     save(file);
     
     % Clear big data
