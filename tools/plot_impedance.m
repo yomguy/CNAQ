@@ -1,7 +1,7 @@
 % Loudspeaker impedance post-processing from a 2 voice acquisition from CNAQ
 % Copyright (C) Guillaume Pellerin
 
-function plot_impedance(fic_mes, R_c, option)
+function plot_impedance(sig_mes, R_c, option)
 
 % fic_resistance : the (CNAQ) MAT file containing the transfert function of the
 % resistance
@@ -11,7 +11,7 @@ function plot_impedance(fic_mes, R_c, option)
 % option : 'lin' or 'log' to plot the frequency with a linear or
 % logarithmic scale respectively
 
-load(fic_mes);
+%load(fic_mes);
 U_r = sig_mes(:,1);
 I_r = sig_mes(:,1)/R_c;
 U_hp = sig_mes(:,2)-U_r;
@@ -33,7 +33,7 @@ f_min_ind = f_min_list(length(f_min_list));
 
 figure
 subplot(2,1,1);
-data = abs(fz);
+data = smooth(abs(fz),20);
 if option == 'lin'
     plot(f,data)
 elseif option == 'log'
@@ -46,7 +46,7 @@ title(['Module de l impedance']);
 grid on
 
 subplot(2,1,2);
-data = unwrap(angle(fz));
+data = smooth(unwrap(angle(fz)),20);
 if option == 'lin'
     plot(f,data)
 elseif option == 'log'

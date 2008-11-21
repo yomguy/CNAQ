@@ -21,25 +21,50 @@ function plot_main(handles)
     type = get(handles.analysis_type,'Value');
     method = get(handles.analysis_method,'Value');
     domain = get(handles.analysis_domain,'Value');
-         
-    % Compute excitation spectrum    
-    [rep_imp_exc, spec_exc] = get_ri_spec(f, sig_exc, sig_exc, f_s, method);
-    len_spec_exc = length(spec_exc);
-    spec_exc = spec_exc(1:len_spec_exc/2);
+    analysis_input_sig = get(handles.analysis_input_sig,'Value');
+    analysis_output_sig = get(handles.analysis_output_sig,'Value');
+    analysis_input_ch = get(handles.analysis_input_ch,'Value');
+    analysis_output_ch = get(handles.analysis_output_ch,'Value');
+    r_c = get(handles.r_c,'Value');
+
+    if analysis_input_sig == 1
+      input_sig = sig_exc;
+    elseif analysis_input_sig == 2
+      input_sig = sig_mes;
+    end
+    if analysis_output_sig == 2
+      output_sig = sig_exc;
+    elseif analysis_output_sig == 1
+      output_sig = sig_mes;
+    end
     
-    % Compute all Ris and specs
-    for i=1:n_col_sig_mes
-        channel = num2str(i);
-        [rep_imp_mes, spec_mes] = get_ri_spec(f, sig_exc, sig_mes(:,i), f_s, method);
-        len_spec_mes = length(spec_mes);    
-        spec_mes = spec_mes(1:len_spec_mes/2);
-        % Plot results
-        f_lin = [0:f_s/len_spec_mes:f_s/2];
-        f_lin = f_lin(1:length(f_lin)-1);
-        plot_mes(t, f_lin, f_s, f_min, f_max, sig_exc, sig_mes(:,i), rep_imp_mes, spec_mes, spec_exc, id, channel, username, comment, i, domain);
+    if type == 1
+    % Transfer function
+    
+        % Compute excitation spectrum    
+        [rep_imp_exc, spec_exc] = get_ri_spec(f, sig_exc, sig_exc, f_s, method);
+        len_spec_exc = length(spec_exc);
+        spec_exc = spec_exc(1:len_spec_exc/2);
+
+        % Compute all Ris and specs
+        for i=1:n_col_sig_mes
+            channel = num2str(i);
+            [rep_imp_mes, spec_mes] = get_ri_spec(f, input_sig, output_sig(:,i), f_s, method);
+            len_spec_mes = length(spec_mes);    
+            spec_mes = spec_mes(1:len_spec_mes/2);
+            % Plot results
+            f_lin = [0:f_s/len_spec_mes:f_s/2];
+            f_lin = f_lin(1:length(f_lin)-1);
+            plot_mes(t, f_lin, f_s, f_min, f_max, input_sig, output_sig(:,i), rep_imp_mes, spec_mes, spec_exc, id, channel, username, comment, i, domain);
+        end
     end
 
-    set(handles.close_button,'UserData',f_lin');
+    if type == 2
+    % Impedance
+        plot_impedance(sig_mes, r_c)
+    end
+    
+    set(handles.close_button,'UserData','f_lin');
     set(handles.plot,'UserData',t);
 
 end

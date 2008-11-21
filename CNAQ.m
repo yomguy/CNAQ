@@ -34,7 +34,7 @@ function varargout = CNAQ(varargin)
 
 %  Author: Guillaume Pellerin <guillaume.pellerin@cnam.fr>
 
-% Last Modified by GUIDE v2.5 08-Apr-2008 18:19:43
+% Last Modified by GUIDE v2.5 21-Nov-2008 10:49:08
 
 %      CNAQ, by itself, creates a new CNAQ or raises the existing
 %      singleton*.
@@ -169,13 +169,17 @@ set(handles.sig_type,'String','Sinus|Chirp|White noise|Pink noise');
 set(handles.channels_in,'String','1|1 2|1 2 3|1 2 3 4|1 2 3 4 5 6 7 8');
 set(handles.channels_out,'String','1|1 2|1 2 3|1 2 3 4|1 2 3 4 5 6 7 8');
 
-set(handles.analysis_type,'String','Default');
+set(handles.analysis_type,'String','Transfer function|Impedance');
 set(handles.analysis_method,'String','Division|Deconvolution');
 set(handles.analysis_domain,'String','Frequency|Time|Time/Frequency');
 set(handles.in_on_off,'UserData',device);
 set(handles.save_button,'UserData',latency);
 
-    
+set(handles.analysis_input_sig,'String','Generated|Measured');
+set(handles.analysis_output_sig,'String','Measured|Generated');
+set(handles.analysis_input_ch,'String','1|2|3|4|5|6|7|8');
+set(handles.analysis_output_ch,'String','1|2|3|4|5|6|7|8');
+
 %============================================
 % DATA
 %============================================
@@ -463,6 +467,122 @@ function analysis_domain_Callback(hObject, eventdata, handles)
 % --- Executes during object creation, after setting all properties.
 function analysis_domain_CreateFcn(hObject, eventdata, handles)
 % hObject    handle to analysis_domain (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: popupmenu controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+
+function r_c_Callback(hObject, eventdata, handles)
+% hObject    handle to r_c (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: get(hObject,'String') returns contents of r_c as text
+%        str2double(get(hObject,'String')) returns contents of r_c as a double
+
+
+% --- Executes during object creation, after setting all properties.
+function r_c_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to r_c (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: edit controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+
+
+
+% --- Executes on selection change in analysis_output_sig.
+function analysis_output_sig_Callback(hObject, eventdata, handles)
+% hObject    handle to analysis_output_sig (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: contents = get(hObject,'String') returns analysis_output_sig contents as cell array
+%        contents{get(hObject,'Value')} returns selected item from analysis_output_sig
+
+
+% --- Executes during object creation, after setting all properties.
+function analysis_output_sig_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to analysis_output_sig (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: popupmenu controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+
+% --- Executes on selection change in analysis_output_ch.
+function analysis_output_ch_Callback(hObject, eventdata, handles)
+% hObject    handle to analysis_output_ch (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: contents = get(hObject,'String') returns analysis_output_ch contents as cell array
+%        contents{get(hObject,'Value')} returns selected item from analysis_output_ch
+
+
+% --- Executes during object creation, after setting all properties.
+function analysis_output_ch_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to analysis_output_ch (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: popupmenu controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+
+% --- Executes on selection change in analysis_input_sig.
+function analysis_input_sig_Callback(hObject, eventdata, handles)
+% hObject    handle to analysis_input_sig (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: contents = get(hObject,'String') returns analysis_input_sig contents as cell array
+%        contents{get(hObject,'Value')} returns selected item from analysis_input_sig
+
+
+% --- Executes during object creation, after setting all properties.
+function analysis_input_sig_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to analysis_input_sig (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: popupmenu controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+
+% --- Executes on selection change in analysis_input_ch.
+function analysis_input_ch_Callback(hObject, eventdata, handles)
+% hObject    handle to analysis_input_ch (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: contents = get(hObject,'String') returns analysis_input_ch contents as cell array
+%        contents{get(hObject,'Value')} returns selected item from analysis_input_ch
+
+
+% --- Executes during object creation, after setting all properties.
+function analysis_input_ch_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to analysis_input_ch (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    empty - handles not created until after all CreateFcns called
 
