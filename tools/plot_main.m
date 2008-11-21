@@ -25,7 +25,7 @@ function plot_main(handles)
     analysis_output_sig = get(handles.analysis_output_sig,'Value');
     analysis_input_ch = get(handles.analysis_input_ch,'Value');
     analysis_output_ch = get(handles.analysis_output_ch,'Value');
-    r_c = get(handles.r_c,'Value');
+    r_c = str2double(get(handles.r_c,'String'));
 
     if analysis_input_sig == 1
       input_sig = sig_exc;
@@ -47,21 +47,21 @@ function plot_main(handles)
         spec_exc = spec_exc(1:len_spec_exc/2);
 
         % Compute all Ris and specs
-        for i=1:n_col_sig_mes
+        %for i=1:n_col_sig_mes
             channel = num2str(i);
-            [rep_imp_mes, spec_mes] = get_ri_spec(f, input_sig, output_sig(:,i), f_s, method);
+            [rep_imp_mes, spec_mes] = get_ri_spec(f, input_sig(:,analysis_input_ch), output_sig(:,analysis_output_ch), f_s, method);
             len_spec_mes = length(spec_mes);    
             spec_mes = spec_mes(1:len_spec_mes/2);
             % Plot results
             f_lin = [0:f_s/len_spec_mes:f_s/2];
             f_lin = f_lin(1:length(f_lin)-1);
-            plot_mes(t, f_lin, f_s, f_min, f_max, input_sig, output_sig(:,i), rep_imp_mes, spec_mes, spec_exc, id, channel, username, comment, i, domain);
-        end
+            plot_mes(t, f_lin, f_s, f_min, f_max, input_sig(:,analysis_input_ch), output_sig(:,analysis_output_ch), rep_imp_mes, spec_mes, spec_exc, id, channel, username, comment, i, domain);
+        %end
     end
 
     if type == 2
     % Impedance
-        plot_impedance(sig_mes, r_c)
+        plot_impedance(output_sig, r_c, f_s, f_min, f_max, 'log');
     end
     
     set(handles.close_button,'UserData','f_lin');
