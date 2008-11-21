@@ -16,4 +16,4 @@ device = 0;
 % If this value is wrong, the phasis results might be also wrong...
 % BE CAREFUL : your ASIO card MUST be ALONE on its IRQ (see Windows system
 % settings)
-latency = 579;
+latency = 575;
