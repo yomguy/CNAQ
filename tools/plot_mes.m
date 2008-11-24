@@ -12,7 +12,7 @@ if domain == 1
 
     figure;
     subplot(2,1,1);
-    spec_mes_log = 10*log10(abs(spec_mes));
+    spec_mes_log = 20*log10(abs(spec_mes));
     semilogx(f, spec_mes_log);
     axis([f_min f_max min(spec_mes_log(f_min_ind:f_max_ind-1000))-6 max(spec_mes_log(f_min_ind:f_max_ind))+6]);
     xlabel('Frequency (Hz)');
