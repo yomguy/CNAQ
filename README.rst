@@ -24,7 +24,9 @@ NEWS
 Installation
 ===============
 
-Uncompress the zip or the tarball in a given directory. 
+Windows ONLY now because of the ASIO technology, sorry.
+
+Uncompress the zip or the tarball in a given directory.
 
 
 License
@@ -42,6 +44,11 @@ Before using CNAQ, you have to read and edit the ASIO config file (config/ASIO.m
 The latency value can to be computed with the get_latency function (tools/get_latency.m).
 
 When configuration is done, simply open CNAQ.m in Matlab and run it (F5)...
+
+Future work
+===========
+
+ * link the audio stream to a multi-platform driver
 
 Development
 ===========
