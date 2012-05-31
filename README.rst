@@ -1,11 +1,8 @@
-# README
-# ======
-
 CNAQ : a Matlab acquisition tool for computing transfert function over audio cards
 
 
-# 1. Introduction
-# ===============
+Introduction
+===============
 
 CNAQ est un programme de génération, d'émission et d'acquisition de signaux
 écrit pour Matlab. Il utilise les cartes son intégrant le protocole ASIO pour
@@ -18,44 +15,57 @@ Fonctionnalités principales :
 - Mesure de fonctions de transfert
 
 
-# 2. Installation
-# ===============
+NEWS
+=====
+
+ * Back from 2008!!
+
+
+Installation
+===============
 
 Uncompress the zip or the tarball in a given directory. 
 
 
-# 3. License
-# ===============
+License
+===============
 
 This software is licensed as described in the file COPYING, which
 you should have received as part of this distribution. The terms
 are also available at http://svn.parisson.org/cnaq/CnacqLicense
 
 
-# 4. Usage
-# =========
+Usage
+=========
 
 Before using CNAQ, you have to read and edit the ASIO config file (config/ASIO.m).
 The latency value can to be computed with the get_latency function (tools/get_latency.m).
 
 When configuration is done, simply open CNAQ.m in Matlab and run it (F5)...
 
- 
-# 5. Authors
-# =========
+Development
+===========
 
-Guillaume Pellerin <guillaume.pellerin@cnam.fr>
-Manuel Melon <melon@cnam.fr>
+To checkout the last development version, we now use GitHub::
 
-
-# 6. Aknowledgements
-# ==================
-
-Philippe Herzog, Andrew Gadenko.
+ git clone git://github.com/yomguy/CNAQ.git
 
 
-# 7. Contact / Infos
-# ==================
+Authors
+=========
+
+ * Guillaume Pellerin <yomguy@parisson.com>
+ * Manuel Melon <melon@cnam.fr>
+
+
+Aknowledgements
+==================
+
+Philippe Herzog, Andrew Gadenko, Manuel Melon.
+
+
+Contact / Infos
+==================
 
 see http://svn.parisson.org/cnaq/ for more details
 
